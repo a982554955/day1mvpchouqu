@@ -12,8 +12,7 @@ import android.widget.Toast;
 import com.example.day1mvpchouqu.interfaces.DataListener;
 import com.example.frame.LoadTypeConfig;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -22,28 +21,18 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
     }
+    /**
+     * 在recyclerview 在整个项目中使用比较频繁，将公共代码j进行抽取
+     * pRecyclerView   要操作的Recyclerview
+     *  pSmartRefreshLayout 如果有刷新和加载更多的问题，所使用的SmartRefreshLayout
+     *  dataListener 刷新和加载的监听，如果实际的使用中不涉及到刷新和加载更多，直接传null
+     * */
     public void initRecyclerView(RecyclerView pRecyclerView, final SmartRefreshLayout pSmartRefreshLayout, final DataListener dataListener){
-        if (pRecyclerView!=null){
-            pRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        }
-        if (pSmartRefreshLayout!=null){
-            pSmartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-                @Override
-                public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                    if (pSmartRefreshLayout!=null){
-                        dataListener.dataType(LoadTypeConfig.REFRESH);
-                    }
-
-                }
-
-                @Override
-                public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                    if (dataListener!=null){
-                        dataListener.dataType(LoadTypeConfig.MORE);
-                    }
-
-                }
-            });
+        if (pRecyclerView!=null)pRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        if (pSmartRefreshLayout!=null&&dataListener!=null)
+       {
+           pSmartRefreshLayout.setOnLoadMoreListener(refreshLayout -> dataListener.dataType(LoadTypeConfig.REFRESH));
+           pSmartRefreshLayout.setOnRefreshListener(refreshLayout -> dataListener.dataType(LoadTypeConfig.MORE));
         }
     }
 

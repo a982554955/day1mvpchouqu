@@ -3,6 +3,8 @@ package com.example.frame;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -26,7 +28,9 @@ public class NetManger {
         }
         return sNetManger;
     }
-
+    /**
+     * t 如果传baseurl,用传过来，没传的话用默认
+     * */
     public <T> IsApiser getService(T... t) {
         String baseUrl = ServerAddressConfig.BASE_URL;
         if (t != null && t.length != 0) {
@@ -41,11 +45,20 @@ public class NetManger {
                 .build()
                 .create(IsApiser.class);
     }
-
+    /**
+     * 使用observce观察者  抽取出网络请求及切换线程的过程
+     *
+     * */
     public <T, O> void netWork(Observable<T> localTestInfo, final ICommonPresenter pPresenter, final int whichApi, final int dataType, O... o) {
         localTestInfo.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        super.onSubscribe(d);
+                        pPresenter.addObservce(d);
+                    }
+
                     @Override
                     public void onSuccess(Object value) {
                         pPresenter.onSuccess(whichApi,dataType,value,o);
@@ -56,5 +69,15 @@ public class NetManger {
                     pPresenter.onFailed(whichApi,e);
                     }
                 });
+    }
+    /**
+     * 使用consumer观察者  抽取出网络请求及切换线程的过程
+     *
+     * */
+    public <T, O> void netWorkByconsumer(Observable<T> localTestInfo, final ICommonPresenter pPresenter, final int whichApi, final int dataType, O... o) {
+        Disposable subscribe = localTestInfo.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(t -> pPresenter.onSuccess(whichApi,dataType,t,o),throwable -> pPresenter.onFailed(whichApi,throwable));
+        pPresenter.addObservce(subscribe);
     }
 }
