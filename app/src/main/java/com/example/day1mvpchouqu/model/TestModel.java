@@ -11,7 +11,7 @@ import java.util.Map;
 
 
 public class TestModel implements ICommonModel {
-
+    String aaa;
     NetManger netManger=NetManger.getInstance();
     @Override
     public void getData(final ICommonPresenter iCommonPresenter, final int whichApi, Object[] params) {
