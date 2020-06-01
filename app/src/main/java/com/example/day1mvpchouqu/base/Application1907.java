@@ -1,9 +1,10 @@
 package com.example.day1mvpchouqu.base;
 
-import android.app.Application;
 import android.content.Context;
 
-public class Application1907 extends Application {
+import com.example.frame.FrameApplication;
+
+public class Application1907 extends FrameApplication {
     private static Application1907 mApplication1907;
     private static Context mApplicationContext;
     @Override

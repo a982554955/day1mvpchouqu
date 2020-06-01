@@ -1,12 +1,16 @@
 package com.example.frame;
 
 
+import java.util.concurrent.TimeUnit;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -40,11 +44,28 @@ public class NetManger {
                 .baseUrl(baseUrl)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-//                .client(NetInterceptor.getNetInterceptor().getClientWithoutCache())
-                .client(new OkHttpClient())
+                .client(initClient())
+
                 .build()
                 .create(IsApiser.class);
     }
+
+    private OkHttpClient initClient() {
+        OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
+        builder.addInterceptor(new CommonHeadersInterceptor());
+        builder.addInterceptor(new CommonParamsInterceptor());
+        builder.addInterceptor(initLogInterceptor());
+        builder.connectTimeout(15, TimeUnit.SECONDS);
+        builder.readTimeout(15,TimeUnit.SECONDS);
+        return builder.build();
+    }
+
+    private Interceptor initLogInterceptor() {
+        HttpLoggingInterceptor log = new HttpLoggingInterceptor();
+        log.setLevel(HttpLoggingInterceptor.Level.BODY);
+        return log;
+    }
+
     /**
      * 使用observce观察者  抽取出网络请求及切换线程的过程
      *
