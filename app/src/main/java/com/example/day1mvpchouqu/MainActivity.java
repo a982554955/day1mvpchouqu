@@ -30,6 +30,7 @@ public class MainActivity extends BaseMvpActivity {
     private ArrayList<TestInfo.DataInfo> dataInfos= new ArrayList<>();
     private int pageId = 0;
     private Map<String, Object> paramHashMap;
+    String string="111";
 
     @Override
     protected int setLayoutId() {
