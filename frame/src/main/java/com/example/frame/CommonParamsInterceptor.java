@@ -5,11 +5,11 @@ import android.util.Log;
 
 import com.example.data.Device;
 import com.example.data.LoginInfo;
+import com.example.frame.constants.ConstantKey;
 import com.example.frame.constants.Constants;
 import com.example.frame.secret.Md5Util;
 import com.google.gson.Gson;
 
-import com.teach.frame.constants.ConstantKey;
 
 
 import java.io.IOException;
@@ -76,7 +76,7 @@ public class CommonParamsInterceptor implements Interceptor {
     private Request addUrl(Request request) {
         Device device = FrameApplication.getFrameApplication().getDeviceInfo();
         LoginInfo info = FrameApplication.getFrameApplication().getLoginInfo();
-        String uid = !TextUtils.isEmpty(info.getUid()) ? info.getUid() : "0";
+        String uid = info!=null&&!TextUtils.isEmpty(info.getUid()) ? info.getUid() : "0";
         String time = String.valueOf(System.currentTimeMillis() / 1000);
         HttpUrl httpUrl = request.url()
                 .newBuilder()
@@ -118,7 +118,7 @@ public class CommonParamsInterceptor implements Interceptor {
         String screctKey = FrameApplication.getFrameApplicationContext().getString(R.string.secrectKey_passport);
         Device device = FrameApplication.getFrameApplication().getDeviceInfo();
         LoginInfo info = FrameApplication.getFrameApplication().getLoginInfo();
-        String uid = !TextUtils.isEmpty(info.getUid()) ? info.getUid() : "0";
+        String uid = info!=null&&!TextUtils.isEmpty(info.getUid()) ? info.getUid() : "0";
         String time = String.valueOf(System.currentTimeMillis() / 1000);
         FormBody.Builder bodyBuilder = new FormBody.Builder();
         if (request.body() instanceof FormBody) {
@@ -158,7 +158,7 @@ public class CommonParamsInterceptor implements Interceptor {
         String screctKey = FrameApplication.getFrameApplicationContext().getString(R.string.secrectKey_passport);
         Device device = FrameApplication.getFrameApplication().getDeviceInfo();
         LoginInfo info = FrameApplication.getFrameApplication().getLoginInfo();
-        String uid = !TextUtils.isEmpty(info.getUid()) ? info.getUid() : "0";
+        String uid = info!=null&&!TextUtils.isEmpty(info.getUid()) ? info.getUid() : "0";
         String time = String.valueOf(System.currentTimeMillis() / 1000);
         HttpUrl.Builder httpBuilder = request.url().newBuilder()
                 .addEncodedQueryParameter("uid", uid)

@@ -24,7 +24,7 @@ public abstract class BaseObserver implements Observer {
 
     @Override
     public void onComplete() {
-    dispose();
+      dispose();
     }
     
     public abstract void onSuccess(Object value);

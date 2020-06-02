@@ -34,5 +34,5 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     api project(path: ':frame')
-    implementation project(path: ':data') // 必要依赖，和Rxjava结合必须用到，下面会提到
+    api project(path: ':data') // 必要依赖，和Rxjava结合必须用到，下面会提到
 }

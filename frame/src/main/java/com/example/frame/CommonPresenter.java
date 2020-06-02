@@ -20,9 +20,9 @@ public class CommonPresenter <V extends ICommonView,M extends ICommonModel>imple
     }
 
     @Override
-    public void onSuccess(int whichApi, int loadType, Object... pD) {
+    public void onSuccess(int whichApi, Object... pD) {
         if (iCommonView!=null&&iCommonView.get()!=null){
-            iCommonView.get().onSuccess(whichApi,loadType,pD);
+            iCommonView.get().onSuccess(whichApi,pD);
         }
 
     }

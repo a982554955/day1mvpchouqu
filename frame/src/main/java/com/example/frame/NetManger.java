@@ -6,7 +6,6 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -51,13 +50,13 @@ public class NetManger {
     }
 
     private OkHttpClient initClient() {
-        OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
-        builder.addInterceptor(new CommonHeadersInterceptor());
-        builder.addInterceptor(new CommonParamsInterceptor());
-        builder.addInterceptor(initLogInterceptor());
-        builder.connectTimeout(15, TimeUnit.SECONDS);
-        builder.readTimeout(15,TimeUnit.SECONDS);
-        return builder.build();
+        return new OkHttpClient().newBuilder()
+        .addInterceptor(new CommonHeadersInterceptor())
+        .addInterceptor(new CommonParamsInterceptor())
+        .addInterceptor(initLogInterceptor())
+        .connectTimeout(15, TimeUnit.SECONDS)
+        .readTimeout(15,TimeUnit.SECONDS)
+        .build();
     }
 
     private Interceptor initLogInterceptor() {
@@ -70,7 +69,7 @@ public class NetManger {
      * 使用observce观察者  抽取出网络请求及切换线程的过程
      *
      * */
-    public <T, O> void netWork(Observable<T> localTestInfo, final ICommonPresenter pPresenter, final int whichApi, final int dataType, O... o) {
+    public <T, O> void netWork(Observable<T> localTestInfo, final ICommonPresenter pPresenter, final int whichApi, O... o) {
         localTestInfo.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver() {
@@ -82,7 +81,7 @@ public class NetManger {
 
                     @Override
                     public void onSuccess(Object value) {
-                        pPresenter.onSuccess(whichApi,dataType,value,o);
+                        pPresenter.onSuccess(whichApi,value,o);
                     }
 
                     @Override
@@ -95,10 +94,10 @@ public class NetManger {
      * 使用consumer观察者  抽取出网络请求及切换线程的过程
      *
      * */
-    public <T, O> void netWorkByconsumer(Observable<T> localTestInfo, final ICommonPresenter pPresenter, final int whichApi, final int dataType, O... o) {
+    public <T, O> void netWorkByconsumer(Observable<T> localTestInfo, final ICommonPresenter pPresenter, final int whichApi, O... o) {
         Disposable subscribe = localTestInfo.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(t -> pPresenter.onSuccess(whichApi,dataType,t,o),throwable -> pPresenter.onFailed(whichApi,throwable));
+                .subscribe(t -> pPresenter.onSuccess(whichApi,t,o),throwable -> pPresenter.onFailed(whichApi,throwable));
         pPresenter.addObservce(subscribe);
     }
 }

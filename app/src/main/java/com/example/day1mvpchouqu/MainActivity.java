@@ -27,10 +27,10 @@ public class MainActivity extends BaseMvpActivity {
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     private MainAdapter adapter;
-    private ArrayList<TestInfo.DataInfo> dataInfos= new ArrayList<>();
+    private ArrayList<TestInfo.DataInfo> dataInfos = new ArrayList<>();
     private int pageId = 0;
     private Map<String, Object> paramHashMap;
-    String string="111";
+    String string = "111";
 
     @Override
     protected int setLayoutId() {
@@ -67,12 +67,12 @@ public class MainActivity extends BaseMvpActivity {
     }
 
     @Override
-    public void netSuccess(int whichApi, int loadType, Object[] pD) {
+    public void netSuccess(int whichApi, Object[] pD) {
         switch (whichApi) {
             case ApiConfig.TEST_GET:
-                if (loadType == LoadTypeConfig.MORE) {
+                if ((int)pD[0] == LoadTypeConfig.MORE) {
                     smartRefreshLayout.finishLoadMore();
-                } else if (loadType == LoadTypeConfig.REFRESH) {
+                } else if ((int)pD[0] == LoadTypeConfig.REFRESH) {
                     smartRefreshLayout.finishRefresh();
                     dataInfos.clear();
                 }

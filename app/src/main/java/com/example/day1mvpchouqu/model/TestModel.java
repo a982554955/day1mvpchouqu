@@ -1,6 +1,7 @@
 package com.example.day1mvpchouqu.model;
 
 
+import com.example.frame.ApiConfig;
 import com.example.frame.ICommonModel;
 import com.example.frame.ICommonPresenter;
 
@@ -15,7 +16,9 @@ public class TestModel implements ICommonModel {
     NetManger netManger=NetManger.getInstance();
     @Override
     public void getData(final ICommonPresenter iCommonPresenter, final int whichApi, Object[] params) {
+
             netManger.netWork(netManger.getService().getTestData(
+
                     (Map) params[1],
                     (int) params[2]),
                     iCommonPresenter,

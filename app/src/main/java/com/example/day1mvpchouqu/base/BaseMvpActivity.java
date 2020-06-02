@@ -30,11 +30,11 @@ public abstract class BaseMvpActivity <M extends ICommonModel>extends BaseActivi
     public abstract void setUpView();
     public abstract void setUpData();
 
-    public abstract void netSuccess(int whichApi,int loadType,Object[] pD);
+    public abstract void netSuccess(int whichApi,Object[] pD);
 
     @Override
-    public void onSuccess(int whichApi, int loadType, Object[] pD) {
-        netSuccess(whichApi,loadType,pD);
+    public void onSuccess(int whichApi, Object[] pD) {
+        netSuccess(whichApi,pD);
     }
     public void netFailed(int whichApi, Throwable pThrowable){}
     @Override
@@ -48,4 +48,5 @@ public abstract class BaseMvpActivity <M extends ICommonModel>extends BaseActivi
         super.onDestroy();
         commonPresenter.clear();
     }
+
 }

@@ -57,7 +57,7 @@ dependencies {
     //okhttp
     api 'com.squareup.okhttp3:okhttp:3.11.0'
     api "com.squareup.okhttp3:logging-interceptor:$ok3log"
-    implementation project(path: ':data')
-    implementation project(path: ':utils')
+    api project(path: ':data')
+    api project(path: ':utils')
 
 }

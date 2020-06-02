@@ -15,7 +15,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 
 public class BaseActivity extends AppCompatActivity {
-
+    public Application1907 mAppication;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
