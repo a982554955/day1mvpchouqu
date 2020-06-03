@@ -1,19 +1,15 @@
 package com.example.day1mvpchouqu.base;
 
-import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.data.Device;
 import com.example.day1mvpchouqu.R;
-import com.example.frame.FrameApplication;
-import com.example.frame.secret.SystemUtils;
 import com.yiyatech.utils.NetworkUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import frame.FrameApplication;
+import frame.secret.SystemUtils;
 
 /**
  * Created by 任小龙 on 2020/6/2.
@@ -40,5 +36,4 @@ public abstract class BaseSplashActivity extends BaseMvpActivity {
         device.setLocalIp(NetworkUtils.getLocalIpAddress());
         FrameApplication.getFrameApplication().setDeviceInfo(device);
     }
-
 }

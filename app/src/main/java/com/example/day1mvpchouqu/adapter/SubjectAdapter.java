@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.data.SpecialtyChooseEntity;
 import com.example.day1mvpchouqu.R;
-import com.example.day1mvpchouqu.design.RoundImage;
+import com.example.day1mvpchouqu.view.design.RoundImage;
 import com.yiyatech.utils.newAdd.GlideUtil;
 
 import java.util.List;

@@ -2,7 +2,6 @@ package com.example.data;
 
 import java.util.List;
 
-
 public class TestInfo {
     public String status;
     public List<DataInfo> datas;

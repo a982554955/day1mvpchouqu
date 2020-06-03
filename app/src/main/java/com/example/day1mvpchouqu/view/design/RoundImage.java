@@ -1,5 +1,8 @@
-package com.example.day1mvpchouqu.design;
+package com.example.day1mvpchouqu.view.design;
 
+/**
+ * Created by 任小龙 on 2014/11/30.
+ */
 
 import android.content.Context;
 import android.content.res.TypedArray;

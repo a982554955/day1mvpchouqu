@@ -4,17 +4,15 @@ import android.content.Context;
 
 import com.example.day1mvpchouqu.R;
 import com.example.day1mvpchouqu.base.Application1907;
-import com.example.frame.ApiConfig;
-import com.example.frame.FrameApplication;
-import com.example.frame.ICommonModel;
-import com.example.frame.ICommonPresenter;
-import com.example.frame.NetManger;
-import com.example.frame.utils.ParamHashMap;
+
+import frame.ApiConfig;
+import frame.FrameApplication;
+import frame.ICommonModel;
+import frame.ICommonPresenter;
+import frame.NetManger;
+import frame.utils.ParamHashMap;
 
 
-/**
- * Created by 任小龙 on 2020/6/3.
- */
 public class AccountModel implements ICommonModel {
     private NetManger mManger = NetManger.getInstance();
     private Context mContext = Application1907.get07ApplicationContext();

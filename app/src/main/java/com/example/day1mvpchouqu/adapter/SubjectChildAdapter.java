@@ -13,11 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.data.SpecialtyChooseEntity;
 import com.example.day1mvpchouqu.R;
-import com.example.frame.FrameApplication;
 
 import java.util.List;
 
+import frame.FrameApplication;
 
+
+/**
+ * Created by 任小龙 on 2020/6/2.
+ */
 public class SubjectChildAdapter extends RecyclerView.Adapter<SubjectChildAdapter.ViewHolder> {
     private List<SpecialtyChooseEntity.DataBean> data;
     private Context mContext;

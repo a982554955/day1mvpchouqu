@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-  >
+    tools:context=".view.activity.LoginActivity">
 
     <ImageView
         android:id="@+id/close_login"
@@ -25,7 +25,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/close_login" />
 
-    <com.example.day1mvpchouqu.LoginView
+    <com.example.day1mvpchouqu.view.LoginView
         android:id="@+id/login_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

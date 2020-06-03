@@ -2,6 +2,9 @@ package com.example.data;
 
 import java.io.Serializable;
 
+/**
+ * Created by 任小龙 on 2020/3/11.
+ */
 public class LoginInfo implements Serializable {
 
     private static final long serialVersionUID = 897623663351151873L;

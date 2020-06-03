@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/dp_10">
 
-    <com.example.day1mvpchouqu.design.RoundImage
+    <com.example.day1mvpchouqu.view.design.RoundImage
         android:id="@+id/left_round_image"
         android:layout_width="@dimen/dp_30"
         android:layout_height="@dimen/dp_30"

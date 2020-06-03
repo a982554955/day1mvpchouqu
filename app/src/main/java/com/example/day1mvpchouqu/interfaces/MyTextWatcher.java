@@ -11,12 +11,13 @@ public abstract class MyTextWatcher implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-    onMyTextChanged(s,start,before,count);
+        onMyTextChanged(s, start, before, count);
     }
 
     @Override
     public void afterTextChanged(Editable s) {
 
     }
+
     public abstract void onMyTextChanged(CharSequence s, int start, int before, int count);
 }
