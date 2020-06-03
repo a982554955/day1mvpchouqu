@@ -1,6 +1,5 @@
 package com.example.day1mvpchouqu.activity;
 
-
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,7 +12,6 @@ import com.example.day1mvpchouqu.adapter.SubjectAdapter;
 import com.example.day1mvpchouqu.base.BaseMvpActivity;
 import com.example.day1mvpchouqu.model.LauchModel;
 import com.example.frame.ApiConfig;
-
 import com.example.frame.constants.ConstantKey;
 import com.yiyatech.utils.newAdd.SharedPrefrenceUtils;
 
@@ -21,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SubjectActivity extends BaseMvpActivity<LauchModel> {
@@ -47,14 +44,15 @@ public class SubjectActivity extends BaseMvpActivity<LauchModel> {
     public void setUpView() {
         titleContent.setText(getString(R.string.select_subject));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new SubjectAdapter(this,mListData);
+        mAdapter = new SubjectAdapter(mListData,this);
         recyclerView.setAdapter(mAdapter);
     }
 
     @Override
     public void setUpData() {
-        if (SharedPrefrenceUtils.getSerializableList(this, ConstantKey.SUBJECT_LIST) != null) {
-            mListData.addAll(SharedPrefrenceUtils.getSerializableList(this, ConstantKey.SUBJECT_LIST));
+        List<SpecialtyChooseEntity> info =  SharedPrefrenceUtils.getSerializableList(this, ConstantKey.SUBJECT_LIST);
+        if (info != null) {
+            mListData.addAll(info);
             mAdapter.notifyDataSetChanged();
         } else
             commonPresenter.getData(ApiConfig.SUBJECT);
@@ -75,7 +73,7 @@ public class SubjectActivity extends BaseMvpActivity<LauchModel> {
     @Override
     protected void onStop() {
         super.onStop();
-        SharedPrefrenceUtils.putObject(this,ConstantKey.SUBJECT_SELECT,mAppication.getSelectdInfo());
+        SharedPrefrenceUtils.putObject(this,ConstantKey.SUBJECT_SELECT,mAppication.getSelectedInfo());
     }
 
     @OnClick(R.id.back_image)

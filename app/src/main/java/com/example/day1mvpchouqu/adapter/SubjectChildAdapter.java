@@ -18,15 +18,12 @@ import com.example.frame.FrameApplication;
 import java.util.List;
 
 
-/**
- * Created by 任小龙 on 2020/6/2.
- */
 public class SubjectChildAdapter extends RecyclerView.Adapter<SubjectChildAdapter.ViewHolder> {
     private List<SpecialtyChooseEntity.DataBean> data;
     private Context mContext;
     private SubjectAdapter fatherAdapter;
 
-    public SubjectChildAdapter(List<SpecialtyChooseEntity.DataBean> pData, Context pContext, SubjectAdapter fatherAdapter) {
+    public SubjectChildAdapter(List<SpecialtyChooseEntity.DataBean> pData, Context pContext,SubjectAdapter fatherAdapter) {
         data = pData;
         mContext = pContext;
         this.fatherAdapter = fatherAdapter;
@@ -41,7 +38,7 @@ public class SubjectChildAdapter extends RecyclerView.Adapter<SubjectChildAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.label.setText(data.get(position).getSpecialty_name());
-        if (FrameApplication.getFrameApplication().getSelectdInfo() != null && !TextUtils.isEmpty(FrameApplication.getFrameApplication().getSelectdInfo().getSpecialty_id()) && FrameApplication.getFrameApplication().getSelectdInfo().getSpecialty_id().equals(data.get(position).getSpecialty_id())) {
+        if (FrameApplication.getFrameApplication().getSelectedInfo() != null && !TextUtils.isEmpty(FrameApplication.getFrameApplication().getSelectedInfo().getSpecialty_id()) && FrameApplication.getFrameApplication().getSelectedInfo().getSpecialty_id().equals(data.get(position).getSpecialty_id())) {
             holder.label.setTextColor(ContextCompat.getColor(mContext, R.color.white));
             holder.label.setBackground(ContextCompat.getDrawable(mContext, R.drawable.bg_subject_selected));
         } else {
@@ -49,7 +46,7 @@ public class SubjectChildAdapter extends RecyclerView.Adapter<SubjectChildAdapte
             holder.label.setBackground(ContextCompat.getDrawable(mContext, R.drawable.shape_radius_white_bg));
         }
         holder.label.setOnClickListener(v -> {
-            FrameApplication.getFrameApplication().setSelectdInfo(data.get(position));
+            FrameApplication.getFrameApplication().setSelectedInfo(data.get(position));
             fatherAdapter.notifyDataSetChanged();
         });
     }

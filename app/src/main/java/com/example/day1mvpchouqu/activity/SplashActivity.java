@@ -2,11 +2,13 @@ package com.example.day1mvpchouqu.activity;
 
 import android.content.Intent;
 import android.graphics.Point;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 
 import com.example.data.BaseInfo;
+import com.example.data.LoginInfo;
 import com.example.data.MainAdEntity;
 import com.example.data.SpecialtyChooseEntity;
 import com.example.day1mvpchouqu.R;
@@ -49,11 +51,14 @@ public class SplashActivity extends BaseSplashActivity {
         mSelectedInfo = SharedPrefrenceUtils.getObject(this, ConstantKey.SUBJECT_SELECT);
         String specialtyId = "";
         if (mSelectedInfo != null && !TextUtils.isEmpty(mSelectedInfo.getSpecialty_id())) {
-            mAppication.setSelectdInfo(mSelectedInfo);
+            mAppication.setSelectedInfo(mSelectedInfo);
             specialtyId = mSelectedInfo.getSpecialty_id();
         }
         Point realSize = SystemUtils.getRealSize(this);
         commonPresenter.getData(ApiConfig.ADVERT, specialtyId, realSize.x, realSize.y);
+        new Handler().postDelayed(()->{ if (mInfo == null)jump(); },3000);
+        LoginInfo loginInfo = SharedPrefrenceUtils.getObject(this,ConstantKey.LOGIN_INFO);
+        if (loginInfo != null && !TextUtils.isEmpty(loginInfo.getUid()))mAppication.setLoginInfo(loginInfo);
     }
 
     @Override
@@ -75,7 +80,7 @@ public class SplashActivity extends BaseSplashActivity {
     }
 
     private void jump() {
-        mSubscribe.dispose();
+        if (mSubscribe != null)mSubscribe.dispose();
         startActivity(new Intent(this,mSelectedInfo != null && !TextUtils.isEmpty(mSelectedInfo.getSpecialty_id()) ? mAppication.isLogin() ? HomeActivity.class : LoginActivity.class : SubjectActivity.class ));
         finish();
     }

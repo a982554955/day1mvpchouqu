@@ -1,6 +1,5 @@
 package com.example.frame;
 
-import android.app.Application;
 import android.content.Context;
 import android.text.TextUtils;
 
@@ -9,20 +8,19 @@ import com.example.data.LoginInfo;
 import com.example.data.SpecialtyChooseEntity;
 import com.yiyatech.utils.UtilsApplication;
 
-
 public class FrameApplication extends UtilsApplication {
     private static FrameApplication application;
     private Device mDeviceInfo;
     private LoginInfo mLoginInfo;
     private String cookie;
-    private SpecialtyChooseEntity.DataBean selectdInfo;
+    private  SpecialtyChooseEntity.DataBean selectedInfo;
 
-    public SpecialtyChooseEntity.DataBean getSelectdInfo() {
-        return selectdInfo;
+    public SpecialtyChooseEntity.DataBean getSelectedInfo() {
+        return selectedInfo;
     }
 
-    public void setSelectdInfo(SpecialtyChooseEntity.DataBean selectdInfo) {
-        this.selectdInfo = selectdInfo;
+    public void setSelectedInfo(SpecialtyChooseEntity.DataBean pSelectedInfo) {
+        selectedInfo = pSelectedInfo;
     }
 
     public String getCookie() {
@@ -36,9 +34,11 @@ public class FrameApplication extends UtilsApplication {
     public LoginInfo getLoginInfo() {
         return mLoginInfo;
     }
+
     public boolean isLogin(){
-        return mLoginInfo!=null&&!TextUtils.isEmpty(mLoginInfo.getUid());
+        return mLoginInfo != null && !TextUtils.isEmpty(mLoginInfo.getUid());
     }
+
     public void setLoginInfo(LoginInfo mLoginInfo) {
         this.mLoginInfo = mLoginInfo;
     }

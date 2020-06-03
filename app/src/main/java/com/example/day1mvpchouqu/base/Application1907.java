@@ -1,13 +1,9 @@
 package com.example.day1mvpchouqu.base;
 
-
 import android.content.Context;
 
 import com.example.frame.FrameApplication;
 
-/**
- * Created by 任小龙 on 2020/5/29.
- */
 public class Application1907 extends FrameApplication {
     private static Application1907 mApplication1907;
     @Override

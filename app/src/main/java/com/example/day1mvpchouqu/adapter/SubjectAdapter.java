@@ -4,16 +4,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.data.SpecialtyChooseEntity;
 import com.example.day1mvpchouqu.R;
+import com.example.day1mvpchouqu.design.RoundImage;
 import com.yiyatech.utils.newAdd.GlideUtil;
 
 import java.util.List;
@@ -23,28 +22,27 @@ import butterknife.ButterKnife;
 
 public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHolder> {
 
-    private Context context;
     private List<SpecialtyChooseEntity> mList;
+    private Context mContext;
 
-    public SubjectAdapter(Context context, List<SpecialtyChooseEntity> mList) {
-        this.context = context;
-        this.mList = mList;
+    public SubjectAdapter(List<SpecialtyChooseEntity> pList, Context pContext) {
+        mList = pList;
+        mContext = pContext;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.subject_child_view, parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.subject_child_view, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        SpecialtyChooseEntity data = mList.get(position);
-        GlideUtil.loadRoundImage(holder.leftRoundImage,data.getIcon());
-        holder.itemTitle.setText(data.getBigspecialty());
-        holder.itemRecyclerview.setLayoutManager(new GridLayoutManager(context,4));
-
-        holder.itemRecyclerview.setAdapter(new SubjectChildAdapter(data.getData(),context,this));
+        SpecialtyChooseEntity entity = mList.get(position);
+        GlideUtil.loadImage(holder.leftRoundImage,entity.getIcon());
+        holder.itemTitle.setText(entity.getBigspecialty());
+        holder.itemRecyclerview.setLayoutManager(new GridLayoutManager(mContext,4));
+        holder.itemRecyclerview.setAdapter(new SubjectChildAdapter(entity.getData(),mContext,this));
     }
 
     @Override
@@ -54,7 +52,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.left_round_image)
-        ImageView leftRoundImage;
+        RoundImage leftRoundImage;
         @BindView(R.id.item_title)
         TextView itemTitle;
         @BindView(R.id.item_recyclerview)
@@ -62,7 +60,6 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHold
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            
         }
     }
 }

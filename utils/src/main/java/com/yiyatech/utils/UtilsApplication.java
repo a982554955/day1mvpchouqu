@@ -3,9 +3,6 @@ package com.yiyatech.utils;
 import android.app.Application;
 import android.content.Context;
 
-/**
- * Created by 任小龙 on 2020/6/2.
- */
 public class UtilsApplication extends Application {
     private static UtilsApplication mApplication;
 
@@ -15,7 +12,7 @@ public class UtilsApplication extends Application {
         mApplication = this;
     }
 
-    public static Context getUtilsApplicaitonContext(){
+    public static Context getUtilsApplicationContext(){
         return mApplication.getApplicationContext();
     }
 }

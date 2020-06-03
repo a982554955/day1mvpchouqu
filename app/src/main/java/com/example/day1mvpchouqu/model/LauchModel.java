@@ -12,9 +12,6 @@ import com.example.frame.NetManger;
 import com.example.frame.utils.ParamHashMap;
 
 
-/**
- * Created by 任小龙 on 2020/6/2.
- */
 public class LauchModel implements ICommonModel {
     private NetManger mManger = NetManger.getInstance();
     private Context mContext = Application1907.get07ApplicationContext();
