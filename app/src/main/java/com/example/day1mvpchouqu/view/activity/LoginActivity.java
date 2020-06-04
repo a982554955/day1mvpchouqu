@@ -9,7 +9,7 @@ import com.example.data.PersonHeader;
 import com.example.day1mvpchouqu.R;
 import com.example.day1mvpchouqu.base.BaseMvpActivity;
 import com.example.day1mvpchouqu.model.AccountModel;
-import com.example.day1mvpchouqu.view.LoginView;
+import com.example.day1mvpchouqu.view.design.LoginView;
 import com.yiyatech.utils.newAdd.SharedPrefrenceUtils;
 
 import java.util.concurrent.TimeUnit;
@@ -27,7 +27,7 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
     @BindView(R.id.login_view)
     LoginView mLoginView;
     private Disposable mSubscribe;
-    private String phoneNum;
+    private String PhoneNum;
 
     @Override
     public AccountModel setModel() {
@@ -54,13 +54,13 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
         switch (whichApi) {
             case ApiConfig.SEND_VERIFY:
                 BaseInfo<String> info = (BaseInfo<String>) pD[0];
-                showToast(info.result);
+             //   showToast(info.result);
                 goTime();
                 break;
             case ApiConfig.VERIFY_LOGIN:
                 BaseInfo<LoginInfo> baseInfo = (BaseInfo<LoginInfo>) pD[0];
                 LoginInfo loginInfo = baseInfo.result;
-                loginInfo.login_name = phoneNum;
+                loginInfo.login_name = PhoneNum;
                 mApplication.setLoginInfo(loginInfo);
                 mPresenter.getData(ApiConfig.GET_HEADER_INFO);
                 break;
@@ -111,8 +111,8 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
 
     @Override
     public void sendVerifyCode(String phoneNum) {
-        this.phoneNum = phoneNum;
-        mPresenter.getData(ApiConfig.SEND_VERIFY, phoneNum);
+      PhoneNum=phoneNum;
+        mPresenter.getData(ApiConfig.SEND_VERIFY, PhoneNum);
     }
 
     @Override

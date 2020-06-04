@@ -57,7 +57,6 @@ drawable collect_white
 drawable course_selected
 drawable course_view
 drawable data_selected
-drawable data_view
 drawable default_head
 drawable fangdajing
 drawable four_corner_white_icon

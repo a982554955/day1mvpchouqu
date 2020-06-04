@@ -33,6 +33,9 @@ dependencies {
 //?Butterknife
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
+    implementation 'androidx.navigation:navigation-fragment:2.0.0-rc02'
+    implementation 'androidx.navigation:navigation-ui:2.0.0-rc02'
     api project(path: ':frame')
     api project(path: ':data') // 必要依赖，和Rxjava结合必须用到，下面会提到
 }
+
