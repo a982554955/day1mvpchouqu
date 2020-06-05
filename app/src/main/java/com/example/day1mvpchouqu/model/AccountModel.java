@@ -4,9 +4,11 @@ import android.content.Context;
 
 import com.example.day1mvpchouqu.R;
 import com.example.day1mvpchouqu.base.Application1907;
+import com.example.day1mvpchouqu.constants.Method;
 
 import frame.ApiConfig;
 import frame.FrameApplication;
+import frame.Host;
 import frame.ICommonModel;
 import frame.ICommonPresenter;
 import frame.NetManger;
@@ -28,7 +30,8 @@ public class AccountModel implements ICommonModel {
                 break;
             case ApiConfig.GET_HEADER_INFO:
                 String uid = FrameApplication.getFrameApplication().getLoginInfo().getUid();
-                mManger.netWork(mManger.getService(mContext.getString(R.string.passport_api)).getHeaderInfo(new ParamHashMap().add("zuid",uid).add("uid",uid)),pPresenter,whichApi);
+//
+                mManger.netWork(NetManger.mService.getHeaderInfo(Host.PASSPORT_API+ Method.GETUSERHEADERFORMOBILE,new ParamHashMap().add("zuid",uid).add("uid",uid)),pPresenter,whichApi);
                 break;
         }
     }

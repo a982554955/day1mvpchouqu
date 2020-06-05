@@ -17,19 +17,18 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
+import retrofit2.http.Url;
 
 /**
  * Created by 任小龙 on 2020/5/28.
  */
 public interface IService {
+    @GET
+    Observable<BaseInfo<MainAdEntity>> getAdvert(@Url String url,@QueryMap Map<String, Object> pMap);
     @GET("/")
     Observable<TestInfo> getTestData(@QueryMap Map<String, Object> params, @Query("page_id") int pageId);
-
-    @GET("ad/getAd")
-    Observable<BaseInfo<MainAdEntity>> getAdvert(@QueryMap Map<String, Object> pMap);
-
-    @GET("lesson/getAllspecialty")
-    Observable<BaseInfo<List<SpecialtyChooseEntity>>> getSubjectList();
+    @GET()
+    Observable<BaseInfo<List<SpecialtyChooseEntity>>> getSubjectList(@Url String url);
 
     @GET("loginByMobileCode")
     Observable<BaseInfo<String>> getLoginVerify(@Query("mobile") String mobile);
@@ -37,7 +36,7 @@ public interface IService {
     @GET("loginByMobileCode")
     Observable<BaseInfo<LoginInfo>> loginByVerify(@QueryMap Map<String, Object> params);
 
-    @POST("getUserHeaderForMobile")
+    @POST
     @FormUrlEncoded
-    Observable<BaseInfo<PersonHeader>> getHeaderInfo(@FieldMap Map<String, Object> params);
+    Observable<BaseInfo<PersonHeader>> getHeaderInfo(@Url String url,@FieldMap Map<String, Object> params);
 }

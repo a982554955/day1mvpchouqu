@@ -97,7 +97,7 @@ public class LoginView extends RelativeLayout {
         verifyCode.addTextChangedListener(new MyTextWatcher() {
             @Override
             public void onMyTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() > 3 && RegexUtil.isPhone(verifyName.getText().toString().trim()))
+                if (s.length() > 5 && RegexUtil.isPhone(verifyName.getText().toString().trim()))
                     loginPress.setEnabled(true);
                 else loginPress.setEnabled(false);
             }

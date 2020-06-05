@@ -15,6 +15,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetManger {
+    public static IService mService;
     private NetManger() {
     }
 
@@ -24,18 +25,29 @@ public class NetManger {
         if (sNetManger == null) {
             synchronized (NetManger.class) {
                 sNetManger = new NetManger();
+                mService=getService();
             }
         }
         return sNetManger;
     }
 
+    private static IService getService() {
+
+        return new Retrofit.Builder()
+                .baseUrl(Host.AD_OPENAPI)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(initClient())
+                .build()
+                .create(IService.class);
+    }
     /**
      * @param t   如果传baseURL，用传过来，没传的话用默认
      * @param <T>
      * @return
      */
     public <T> IService getService(T... t) {
-        String baseUrl = ServerAddressConfig.BASE_URL;
+        String baseUrl = Host.AD_OPENAPI;
         if (t != null && t.length != 0) {
             baseUrl = (String) t[0];
         }
@@ -48,7 +60,7 @@ public class NetManger {
                 .create(IService.class);
     }
 
-    private OkHttpClient initClient() {
+    private static OkHttpClient initClient() {
         return new OkHttpClient().newBuilder()
                 .addInterceptor(new CommonHeadersInterceptor())
                 .addInterceptor(new CommonParamsInterceptor())
@@ -58,7 +70,7 @@ public class NetManger {
                 .build();
     }
 
-    private Interceptor initLogInterceptor() {
+    private static Interceptor initLogInterceptor() {
         HttpLoggingInterceptor log = new HttpLoggingInterceptor();
         log.setLevel(HttpLoggingInterceptor.Level.BODY);
         return log;
