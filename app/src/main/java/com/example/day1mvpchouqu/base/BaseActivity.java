@@ -34,7 +34,7 @@ public class BaseActivity extends AppCompatActivity {
         if (pRecyclerView != null) pRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         if (pRefreshLayout != null && pDataListener != null) {
             pRefreshLayout.setOnRefreshListener(refreshLayout -> pDataListener.dataType(LoadTypeConfig.REFRESH));
-            pRefreshLayout.setOnLoadMoreListener(refreshLayout -> pDataListener.dataType(LoadTypeConfig.MORE));
+            pRefreshLayout.setOnLoadMoreListener(refreshLayout -> pDataListener.dataType(LoadTypeConfig.NORMAL));
         }
     }
 

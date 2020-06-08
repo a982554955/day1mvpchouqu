@@ -1,11 +1,15 @@
 package frame;
 
 import com.example.data.BaseInfo;
+import com.example.data.CourseDrillBean;
+import com.example.data.IndexCommondEntity;
 import com.example.data.LoginInfo;
 import com.example.data.MainAdEntity;
+import com.example.data.MainPageInfo;
 import com.example.data.PersonHeader;
 import com.example.data.SpecialtyChooseEntity;
 import com.example.data.TestInfo;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 import java.util.Map;
@@ -39,4 +43,12 @@ public interface IService {
     @POST
     @FormUrlEncoded
     Observable<BaseInfo<PersonHeader>> getHeaderInfo(@Url String url,@FieldMap Map<String, Object> params);
+    @GET
+    Observable<BaseInfo<List<IndexCommondEntity>>> getCommonList(@Url String url, @QueryMap Map<String,Object> params);
+    @GET
+    Observable<JsonObject> getBannerLive(@Url String url, @QueryMap Map<String,Object> params);
+//    @GET//课程训练营
+//    Observable<BaseInfo<CourseDrillBean>>getCourseDrillData(@Url String url,@QueryMap Map<String,Object>map);
+//    @GET//课程训练营
+//    Observable<BaseInfo<CourseDrillBean>>getCourseDrillData(@QueryMap Map<String,Object>map);
 }

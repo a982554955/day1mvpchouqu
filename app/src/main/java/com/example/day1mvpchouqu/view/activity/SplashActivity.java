@@ -81,7 +81,7 @@ public class SplashActivity extends BaseSplashActivity {
 
     private void jump() {
         if (mSubscribe != null)mSubscribe.dispose();
-        startActivity(new Intent(this,mSelectedInfo != null && !TextUtils.isEmpty(mSelectedInfo.getSpecialty_id()) ? /*mApplication.isLogin() ? HomeActivity.class :*/ LoginActivity.class : SubjectActivity.class ));
+        startActivity(new Intent(this,mSelectedInfo != null && !TextUtils.isEmpty(mSelectedInfo.getSpecialty_id()) ? mApplication.isLogin() ? HomeActivity.class : LoginActivity.class : SubjectActivity.class ));
         finish();
     }
 

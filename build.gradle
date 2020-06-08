@@ -49,7 +49,7 @@ ext {
     minify = false
     leakCanary = '1.5.4'
     smartRefresh = '1.1.0-andx-11'
-    gson = '2.8.5'
+    gson = '2.8.6'
     eventBusVersion = '3.1.1'
     jsoupVersion = '1.10.2'
     xstreamVersion = '1.2.2'

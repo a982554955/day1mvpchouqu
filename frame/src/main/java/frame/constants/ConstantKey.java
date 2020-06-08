@@ -1,6 +1,7 @@
 package frame.constants;
 
 public class ConstantKey {
+    public static final String IS_SELECTDE="lksdjaljasdljlkjlsdjflajsdlkjf";
     public static final String WX_APP_ID = "wx4b6c402fee6860c8";
     public static final String WX_APP_SECRET = "1278977f2848ee16708c656f66abf35a";
     public static final String QQ_APP_ID = "1105712307";

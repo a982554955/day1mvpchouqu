@@ -78,7 +78,7 @@ public class CommonPresenter<V extends ICommonView, M extends ICommonModel> impl
    /* @Override
     public void getData(int whichApi, int loadType, Object[] pObjects) {
         mModel.getData(this, whichApi, loadType, pObjects);
-    }*/
+    }
 
     /**
      * 发起涉及刷新和加载的网络请求

@@ -7,4 +7,7 @@ public class ApiConfig {
     public static final int SEND_VERIFY = 4;
     public static final int VERIFY_LOGIN = 5;
     public static final int GET_HEADER_INFO = 6;
+    public static final int MAIN_PAGE_LIST = 7;
+    public static final int BANNER_LIVE_DATA = 8;
+
 }
