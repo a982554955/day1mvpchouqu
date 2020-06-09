@@ -65,7 +65,7 @@ public class MainPageFragment extends BaseMvpFragment<MainPageModel> implements 
     @Override
     public void setUpView() {
         initRecyclerView(recyclerView, refreshLayout, this);
-        mMainPageAdapter = new MainPageAdapter(bottomList,bannerData,mLivesData,getContext());
+        mMainPageAdapter = new MainPageAdapter(bottomList,bannerData,mLivesData,getActivity());
         recyclerView.setAdapter(mMainPageAdapter);
     }
 
@@ -103,7 +103,7 @@ public class MainPageFragment extends BaseMvpFragment<MainPageModel> implements 
                         if (object.getString("errNo").equals("0")){
                             int load = (int) ((Object[]) pD[1])[0];
                             if (load==LoadTypeConfig.REFRESH){
-
+                                bannerData.clear();mLivesData.clear();
                             }
                             String result = object.getString("result");
                             JSONObject resultObject = new JSONObject(result);
@@ -118,7 +118,9 @@ public class MainPageFragment extends BaseMvpFragment<MainPageModel> implements 
                             for (BannerLiveInfo.Carousel data:info.Carousel) {
                                 bannerData.add(data.thumb);
                             }
-                            mLivesData.addAll(info.live);
+                            if (info.live!=null) {
+                                mLivesData.addAll(info.live);
+                            }
                             banLive = true;
                             if (mainList) {
                                 mMainPageAdapter.notifyDataSetChanged();
@@ -136,9 +138,12 @@ public class MainPageFragment extends BaseMvpFragment<MainPageModel> implements 
     @Override
     public void dataType(int mode) {
         if (mode==LoadTypeConfig.REFRESH){
-            mPresenter.getData(ApiConfig.MAIN_PAGE_LIST, LoadTypeConfig.NORMAL, currentPage);
-            mPresenter.getData(ApiConfig.BANNER_LIVE_DATA,LoadTypeConfig.NORMAL);
+            mainList=false;
+            banLive=false;
+            mPresenter.getData(ApiConfig.MAIN_PAGE_LIST, LoadTypeConfig.NORMAL, 1);
+            mPresenter.getData(ApiConfig.BANNER_LIVE_DATA,LoadTypeConfig.REFRESH);
         }else {
+            currentPage++;
             mPresenter.getData(ApiConfig.MAIN_PAGE_LIST, LoadTypeConfig.MORE, currentPage);
         }
     }

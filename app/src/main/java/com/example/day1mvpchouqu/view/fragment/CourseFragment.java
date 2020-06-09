@@ -4,13 +4,14 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.day1mvpchouqu.R;
-import com.example.day1mvpchouqu.adapter.CourseVpAdapter;
+import com.example.day1mvpchouqu.adapter.MyFragmentAdapter;
 import com.example.day1mvpchouqu.base.BaseMvpFragment;
 import com.example.day1mvpchouqu.model.MainPageModel;
-import com.google.android.material.tabs.TabLayout;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.flyco.tablayout.SlidingTabLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -18,15 +19,20 @@ import butterknife.BindView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CourseFragment extends BaseMvpFragment<MainPageModel> {
+public class CourseFragment extends BaseMvpFragment {
 
 
-    @BindView(R.id.tablayout)
-    TabLayout tablayout;
-    @BindView(R.id.viewpager)
-    ViewPager viewpager;
+    @BindView(R.id.slide_layout)
+    SlidingTabLayout slideLayout;
+    @BindView(R.id.viewPager)
+    ViewPager viewPager;
+   private List<String> tabTitles = new ArrayList<>();
+    private List<Fragment> fragments = new ArrayList<>();
+    private MyFragmentAdapter mAdapter;
 
-
+    public static final int TRAINTAB = 3;
+    public static final int BESTTAB = 1;
+    public static final int PUBLICTAB = 2;
 
     @Override
     protected int getLayout() {
@@ -35,27 +41,23 @@ public class CourseFragment extends BaseMvpFragment<MainPageModel> {
 
     @Override
     public MainPageModel setModel() {
-        return new MainPageModel();
+        return null;
     }
 
     @Override
     public void setUpView() {
-        ArrayList<String> tabTitles = new ArrayList<>();
-        tabTitles.add("训练营");
-        tabTitles.add("精品课");
-        tabTitles.add("公开课");
-        ArrayList<Fragment> fragments = new ArrayList<>();
-//        fragments.add(new ChildCourseFragment(3));
-//        fragments.add(new ChildCourseFragment(1));
-//        fragments.add(new ChildCourseFragment(2));
-        tablayout.setupWithViewPager(viewpager);
-        CourseVpAdapter adapter = new CourseVpAdapter(getChildFragmentManager(),tabTitles,fragments);
-        viewpager.setAdapter(adapter);
-
+        mAdapter = new MyFragmentAdapter(getChildFragmentManager(),  fragments,tabTitles);
+        viewPager.setAdapter(mAdapter);
+        slideLayout.setViewPager(viewPager);
     }
 
     @Override
     public void setUpData() {
+
+        Collections.addAll(tabTitles,"训练营","精品课","公开课");
+        Collections.addAll(fragments,CourseChildFragment.getInstance(TRAINTAB),CourseChildFragment.getInstance(BESTTAB),CourseChildFragment.getInstance(PUBLICTAB));
+        mAdapter.notifyDataSetChanged();
+        slideLayout.notifyDataSetChanged();
 
     }
 

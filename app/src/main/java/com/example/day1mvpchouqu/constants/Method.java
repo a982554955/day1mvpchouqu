@@ -7,5 +7,7 @@ public class Method {
 
     public static final String GETINDEXCOMMEND = "lesson/getIndexCommend";
     public static final String GETCAROUSELPHOTO = "lesson/getCarouselphoto";
-
+    public static final String GETLESSONLISTFORAPI = "lesson/getLessonListForApi";
+    public static final String GETGROUPLIST = "group/getGroupList";
+    public static final String REMOVEGROUP = "removeGroup";
 }

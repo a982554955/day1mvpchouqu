@@ -9,5 +9,10 @@ public class ApiConfig {
     public static final int GET_HEADER_INFO = 6;
     public static final int MAIN_PAGE_LIST = 7;
     public static final int BANNER_LIVE_DATA = 8;
+    public static final int COURSE_CHILD = 9;
+    public static final int DATA_GROUP = 10;
+    public static final int RECENT_BEST = 11;
+    public static final int CLICK_TC_FOCUS = 12;
+    public static final int CLICK_CANCEL_FOCUS = 13;
 
 }
