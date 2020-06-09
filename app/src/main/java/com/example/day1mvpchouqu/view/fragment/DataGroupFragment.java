@@ -86,6 +86,15 @@ public class DataGroupFragment extends BaseMvpFragment<DataModel> implements Dat
                         mAdapter.notifyItemChanged(clickPos);
                     }
                     break;
+                    case ApiConfig.CLICK_TC_FOCUS:
+                        BaseInfo base= (BaseInfo) pD[0];
+                        int clickPosa= (Integer) pD[1];
+                        if (base.isSuccess()){
+                            showToast("加入成功");
+                            mList.get(clickPosa).setIs_ftop(0);
+                            mAdapter.notifyItemChanged(clickPosa);
+                        }
+                        break;
         }
     }
 
@@ -113,7 +122,7 @@ public class DataGroupFragment extends BaseMvpFragment<DataModel> implements Dat
 
                        mPresenter.getData(ApiConfig.CLICK_CANCEL_FOCUS,entity.getGid(),pos);
                        }else {//没有关注，点击关注
-
+                        mPresenter.getData(ApiConfig.CLICK_TC_FOCUS,entity.getGid(),entity.getGroup_name(),pos);
                        }
                        break;
                }

@@ -55,4 +55,7 @@ public interface IService {
     @POST
     @FormUrlEncoded
     Observable<BaseInfo>removeFocus(@Url String url, @FieldMap Map<String,Object> params);
+    @POST
+    @FormUrlEncoded
+    Observable<BaseInfo>joinFocus(@Url String url,@FieldMap Map<String,Object> params);
 }

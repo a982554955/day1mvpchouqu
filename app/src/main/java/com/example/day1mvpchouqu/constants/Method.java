@@ -10,4 +10,5 @@ public class Method {
     public static final String GETLESSONLISTFORAPI = "lesson/getLessonListForApi";
     public static final String GETGROUPLIST = "group/getGroupList";
     public static final String REMOVEGROUP = "removeGroup";
+    public static final String JOINGROUP = "joingroup";
 }
