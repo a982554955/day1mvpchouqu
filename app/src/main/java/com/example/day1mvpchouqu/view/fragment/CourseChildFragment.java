@@ -81,7 +81,7 @@ public class CourseChildFragment extends BaseMvpFragment<CourseModel> implements
                 if (infos.isSuccess()){
                     List<SearchItemEntity> lists = infos.result.lists;
 
-                    int loadMode = (int) ((Object[]) pD[1])[0];
+                    int loadMode = (int) pD[1];
                     if (loadMode==LoadTypeConfig.REFRESH){
                         refreshLayout.finishRefresh();
                         mCourseListInfos.clear();

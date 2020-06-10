@@ -1,6 +1,7 @@
 package com.example.day1mvpchouqu.view.activity;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,6 +24,8 @@ import butterknife.OnClick;
 import frame.ApiConfig;
 import frame.constants.ConstantKey;
 
+import static com.example.day1mvpchouqu.constants.JumpConstant.*;
+
 public class SubjectActivity extends BaseMvpActivity<LauchModel> {
 
     private List<SpecialtyChooseEntity> mListData = new ArrayList<>();
@@ -33,6 +36,8 @@ public class SubjectActivity extends BaseMvpActivity<LauchModel> {
     private SubjectAdapter mAdapter;
     @BindView(R.id.more_content)
     TextView moreContent;
+    private String mFrom;
+
     @Override
     public LauchModel setModel() {
         return new LauchModel();
@@ -45,13 +50,26 @@ public class SubjectActivity extends BaseMvpActivity<LauchModel> {
 
     @Override
     public void setUpView() {
+        mFrom = getIntent().getStringExtra(JUMP_KEY);
         titleContent.setText(getString(R.string.select_subject));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new SubjectAdapter(mListData,this);
         recyclerView.setAdapter(mAdapter);
         moreContent.setText("完成");
-        moreContent.setOnClickListener(v -> {startActivity(new Intent(SubjectActivity.this, mApplication.isLogin()?HomeActivity.class:LoginActivity.class));
+        moreContent.setOnClickListener(v -> {
+                if (mApplication.getSelectedInfo()==null){
+                    showToast("请选择专业");
+                    return;
+                }
+            if (mFrom.equals(SPLASH_TO_SUB)){
+                if ( mApplication.isLogin()){
+                    startActivity(new Intent(this,HomeActivity.class));
+                }else {
+                    startActivity(new Intent(this,LoginActivity.class).putExtra(JUMP_KEY,SUB_TO_LOGIN));
+                }
+            }
 
+            finish();
         });
     }
 

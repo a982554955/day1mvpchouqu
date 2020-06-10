@@ -29,6 +29,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.example.day1mvpchouqu.constants.JumpConstant.*;
+
 public class SplashActivity extends BaseSplashActivity {
 
     private BaseInfo<MainAdEntity> mInfo;
@@ -81,7 +83,16 @@ public class SplashActivity extends BaseSplashActivity {
 
     private void jump() {
         if (mSubscribe != null)mSubscribe.dispose();
-        startActivity(new Intent(this,mSelectedInfo != null && !TextUtils.isEmpty(mSelectedInfo.getSpecialty_id()) ? mApplication.isLogin() ? HomeActivity.class : LoginActivity.class : SubjectActivity.class ));
+        if (mSelectedInfo != null && !TextUtils.isEmpty(mSelectedInfo.getSpecialty_id())){
+            if (mApplication.isLogin()){
+                startActivity(new Intent(this,HomeActivity.class));
+            }else {
+                startActivity(new Intent(this,LoginActivity.class).putExtra(JUMP_KEY,SPLASH_TO_LOGIN));
+            }
+        }else {
+            startActivity(new Intent(this,SubjectActivity.class).putExtra(JUMP_KEY,SPLASH_TO_SUB));
+        }
+
         finish();
     }
 

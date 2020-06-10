@@ -1,6 +1,7 @@
 package com.example.day1mvpchouqu.view.activity;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.example.data.BaseInfo;
@@ -23,11 +24,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.example.day1mvpchouqu.constants.JumpConstant.*;
+
 public class LoginActivity extends BaseMvpActivity<AccountModel> implements LoginView.LoginViewCallBack {
     @BindView(R.id.login_view)
     LoginView mLoginView;
     private Disposable mSubscribe;
     private String PhoneNum;
+    private String mFromType;
 
     @Override
     public AccountModel setModel() {
@@ -41,6 +45,7 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
 
     @Override
     public void setUpView() {
+        mFromType = getIntent().getStringExtra(JUMP_KEY);
         mLoginView.setLoginViewCallBack(this);
     }
 
@@ -54,8 +59,11 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
         switch (whichApi) {
             case ApiConfig.SEND_VERIFY:
                 BaseInfo<String> info = (BaseInfo<String>) pD[0];
-             //   showToast(info.result);
-                goTime();
+                if (info.isSuccess()){
+                       showToast(info.result);
+                    goTime();
+                }else showToast("验证码发送太频繁，请稍后重试");
+
                 break;
             case ApiConfig.VERIFY_LOGIN:
                 BaseInfo<LoginInfo> baseInfo = (BaseInfo<LoginInfo>) pD[0];
@@ -74,8 +82,11 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
     }
 
     private void jump() {
-        startActivity(new Intent(this,HomeActivity.class));
-        this.finish();
+        if (mFromType.equals(SPLASH_TO_LOGIN)||mFromType.equals(SUB_TO_LOGIN))
+            startActivity(new Intent(this,HomeActivity.class));
+            this.finish();
+
+
     }
 
     private long time = 60l;
@@ -96,6 +107,9 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.close_login:
+                if (!TextUtils.isEmpty(mFromType)&&(mFromType.equals(SUB_TO_LOGIN)||mFromType.equals(SPLASH_TO_LOGIN))){
+                    startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                }
                 finish();
                 break;
             case R.id.register_press:
@@ -120,6 +134,7 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
         doPre();
         if (mLoginView.mCurrentLoginType == mLoginView.VERIFY_TYPE)
             mPresenter.getData(ApiConfig.VERIFY_LOGIN, userName, pwd);
+//            jump();
     }
 
     @Override

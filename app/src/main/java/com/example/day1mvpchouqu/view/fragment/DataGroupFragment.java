@@ -1,5 +1,7 @@
 package com.example.day1mvpchouqu.view.fragment;
 
+import android.content.Intent;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.data.BaseInfo;
@@ -10,6 +12,7 @@ import com.example.day1mvpchouqu.base.BaseMvpFragment;
 import com.example.day1mvpchouqu.interfaces.DataListener;
 import com.example.day1mvpchouqu.interfaces.OnRecyclerItemClick;
 import com.example.day1mvpchouqu.model.DataModel;
+import com.example.day1mvpchouqu.view.activity.LoginActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
@@ -17,10 +20,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import frame.ApiConfig;
+import frame.FrameApplication;
 import frame.LoadTypeConfig;
 
 import static com.example.day1mvpchouqu.adapter.DataGroupAdapter.FOCUS_TYPE;
 import static com.example.day1mvpchouqu.adapter.DataGroupAdapter.ITEM_TYPE;
+import static com.example.day1mvpchouqu.constants.JumpConstant.*;
 
 public class DataGroupFragment extends BaseMvpFragment<DataModel> implements DataListener, OnRecyclerItemClick {
     @BindView(R.id.recyclerView)
@@ -66,7 +71,7 @@ public class DataGroupFragment extends BaseMvpFragment<DataModel> implements Dat
                 BaseInfo<List<DataGroupListEntity>> info= (BaseInfo<List<DataGroupListEntity>>) pD[0];
                 if (info.isSuccess()){
                     List<DataGroupListEntity> result = info.result;
-                    int loadMode = (int) ((Object[]) pD[1])[0];
+                    int loadMode = (int) pD[1];
                     if (loadMode==LoadTypeConfig.REFRESH){
                         mList.clear();
                         refreshLayout.finishRefresh();
@@ -79,19 +84,19 @@ public class DataGroupFragment extends BaseMvpFragment<DataModel> implements Dat
                 break;
                 case ApiConfig.CLICK_CANCEL_FOCUS:
                     BaseInfo baseInfo= (BaseInfo) pD[0];
-                    int clickPos= (Integer) pD[1];
+                    int clickPos= (int) pD[1];
                     if (baseInfo.isSuccess()){
                         showToast("取消成功");
                         mList.get(clickPos).setIs_ftop(0);
                         mAdapter.notifyItemChanged(clickPos);
                     }
                     break;
-                    case ApiConfig.CLICK_TC_FOCUS:
+                    case ApiConfig.CLICK_TO_FOCUS:
                         BaseInfo base= (BaseInfo) pD[0];
-                        int clickPosa= (Integer) pD[1];
+                        int clickPosa= (int) pD[1];
                         if (base.isSuccess()){
                             showToast("加入成功");
-                            mList.get(clickPosa).setIs_ftop(0);
+                            mList.get(clickPosa).setIs_ftop(1);
                             mAdapter.notifyItemChanged(clickPosa);
                         }
                         break;
@@ -116,13 +121,16 @@ public class DataGroupFragment extends BaseMvpFragment<DataModel> implements Dat
 
                        break;
                    case FOCUS_TYPE:
-                       DataGroupListEntity entity = mList.get(pos);
-
-                       if (entity.isFocus()){//已经关注，取消关注的接口
-
-                       mPresenter.getData(ApiConfig.CLICK_CANCEL_FOCUS,entity.getGid(),pos);
-                       }else {//没有关注，点击关注
-                        mPresenter.getData(ApiConfig.CLICK_TC_FOCUS,entity.getGid(),entity.getGroup_name(),pos);
+                       boolean login = FrameApplication.getFrameApplication().isLogin();
+                       if (login){
+                           DataGroupListEntity entity = mList.get(pos);
+                           if (entity.isFocus()){//已经关注，取消关注
+                               mPresenter.getData(ApiConfig.CLICK_CANCEL_FOCUS,entity.getGid(),pos);//绿码
+                           } else  {//没有关注，点击关注
+                               mPresenter.getData(ApiConfig.CLICK_TO_FOCUS,entity.getGid(),entity.getGroup_name(),pos);
+                           }
+                       } else {
+                           startActivity(new Intent(getContext(), LoginActivity.class).putExtra(JUMP_KEY,DATAGROUPFRAGMENT_TO_LOGIN));
                        }
                        break;
                }

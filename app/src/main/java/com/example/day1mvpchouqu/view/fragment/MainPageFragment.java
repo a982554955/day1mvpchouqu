@@ -79,7 +79,7 @@ public class MainPageFragment extends BaseMvpFragment<MainPageModel> implements 
     public void netSuccess(int whichApi, Object[] pD) {
         switch (whichApi) {
             case ApiConfig.MAIN_PAGE_LIST:
-                int loadMode = (int) ((Object[]) pD[1])[0];
+                int loadMode = (int) pD[1];
                 BaseInfo<List<IndexCommondEntity>> baseInfo = (BaseInfo<List<IndexCommondEntity>>) pD[0];
                 if (baseInfo.isSuccess()){
                     if (loadMode == LoadTypeConfig.MORE) refreshLayout.finishLoadMore();
@@ -101,7 +101,7 @@ public class MainPageFragment extends BaseMvpFragment<MainPageModel> implements 
                     try {
                         JSONObject object = new JSONObject(jsonObject.toString());
                         if (object.getString("errNo").equals("0")){
-                            int load = (int) ((Object[]) pD[1])[0];
+                            int load = (int)pD[1];
                             if (load==LoadTypeConfig.REFRESH){
                                 bannerData.clear();mLivesData.clear();
                             }
