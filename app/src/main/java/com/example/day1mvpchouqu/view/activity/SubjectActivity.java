@@ -37,6 +37,9 @@ public class SubjectActivity extends BaseMvpActivity<LauchModel> {
     @BindView(R.id.more_content)
     TextView moreContent;
     private String mFrom;
+    private String mPhoneNum;
+    private String mUserName;
+    private String mPwd;
 
     @Override
     public LauchModel setModel() {
@@ -50,32 +53,35 @@ public class SubjectActivity extends BaseMvpActivity<LauchModel> {
 
     @Override
     public void setUpView() {
-        mFrom = getIntent().getStringExtra(JUMP_KEY);
+
         titleContent.setText(getString(R.string.select_subject));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new SubjectAdapter(mListData,this);
+        mAdapter = new SubjectAdapter(mListData, this);
         recyclerView.setAdapter(mAdapter);
         moreContent.setText("完成");
         moreContent.setOnClickListener(v -> {
-                if (mApplication.getSelectedInfo()==null){
-                    showToast("请选择专业");
-                    return;
-                }
-            if (mFrom.equals(SPLASH_TO_SUB)){
-                if ( mApplication.isLogin()){
-                    startActivity(new Intent(this,HomeActivity.class));
-                }else {
-                    startActivity(new Intent(this,LoginActivity.class).putExtra(JUMP_KEY,SUB_TO_LOGIN));
-                }
+            if (mApplication.getSelectedInfo() == null) {
+                showToast("请选择专业");
+                return;
             }
+            if (mFrom.equals(SPLASH_TO_SUB)) {
+                if (mApplication.isLogin()) {
+                    startActivity(new Intent(this, HomeActivity.class));
+                } else {
+                    startActivity(new Intent(this, LoginActivity.class).putExtra(JUMP_KEY, SUB_TO_LOGIN));
+                }
 
+            }
             finish();
+
         });
     }
 
     @Override
     public void setUpData() {
-        List<SpecialtyChooseEntity> info =  SharedPrefrenceUtils.getSerializableList(this, ConstantKey.SUBJECT_LIST);
+        mFrom = getIntent().getStringExtra(JUMP_KEY);
+
+        List<SpecialtyChooseEntity> info = SharedPrefrenceUtils.getSerializableList(this, ConstantKey.SUBJECT_LIST);
         if (info != null) {
             mListData.addAll(info);
             mAdapter.notifyDataSetChanged();
@@ -90,7 +96,7 @@ public class SubjectActivity extends BaseMvpActivity<LauchModel> {
                 BaseInfo<List<SpecialtyChooseEntity>> info = (BaseInfo<List<SpecialtyChooseEntity>>) pD[0];
                 mListData.addAll(info.result);
                 mAdapter.notifyDataSetChanged();
-                SharedPrefrenceUtils.putSerializableList(this,ConstantKey.SUBJECT_LIST,mListData);
+                SharedPrefrenceUtils.putSerializableList(this, ConstantKey.SUBJECT_LIST, mListData);
                 break;
         }
     }
@@ -98,7 +104,7 @@ public class SubjectActivity extends BaseMvpActivity<LauchModel> {
     @Override
     protected void onStop() {
         super.onStop();
-        SharedPrefrenceUtils.putObject(this,ConstantKey.SUBJECT_SELECT,mApplication.getSelectedInfo());
+        SharedPrefrenceUtils.putObject(this, ConstantKey.SUBJECT_SELECT, mApplication.getSelectedInfo());
     }
 
     @OnClick(R.id.back_image)

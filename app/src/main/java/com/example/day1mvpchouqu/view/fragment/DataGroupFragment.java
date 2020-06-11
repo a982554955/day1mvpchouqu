@@ -93,11 +93,11 @@ public class DataGroupFragment extends BaseMvpFragment<DataModel> implements Dat
                     break;
                     case ApiConfig.CLICK_TO_FOCUS:
                         BaseInfo base= (BaseInfo) pD[0];
-                        int clickPosa= (int) pD[1];
+                        int clickJoinPos= (int) pD[1];
                         if (base.isSuccess()){
                             showToast("加入成功");
-                            mList.get(clickPosa).setIs_ftop(1);
-                            mAdapter.notifyItemChanged(clickPosa);
+                            mList.get(clickJoinPos).setIs_ftop(1);
+                            mAdapter.notifyItemChanged(clickJoinPos);
                         }
                         break;
         }

@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -58,4 +59,26 @@ public interface IService {
     @POST
     @FormUrlEncoded
     Observable<BaseInfo>joinFocus(@Url String url,@FieldMap Map<String,Object> params);
+
+    @POST
+    @FormUrlEncoded
+    Observable<BaseInfo> checkVerifyCode(@Url String url, @FieldMap Map<String,Object> params);
+
+    @POST
+    @FormUrlEncoded
+    Observable<BaseInfo> checkPhoneIsUsed(@Url String url, @Field("mobile")Object mobile);
+
+    @POST
+    @FormUrlEncoded
+    Observable<BaseInfo> sendRegisterVerify(@Url String url, @Field("mobile")Object mobile);
+
+
+    @POST
+    @FormUrlEncoded
+    Observable<BaseInfo> checkName(@Url String url, @Field("username")Object mobile);
+
+    @POST
+    @FormUrlEncoded
+    Observable<BaseInfo> registerCompleteWithSubject(@Url String url, @FieldMap Map<String,Object> params);
+
 }

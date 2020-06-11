@@ -24,7 +24,7 @@ public class DataModel implements ICommonModel {
                 NetManger.getInstance().netWork(NetManger.mService.removeFocus(Host.BBS_API+Method.REMOVEGROUP,add1),pPresenter,whichApi,params[1]);
                 break;
                 case ApiConfig.CLICK_TO_FOCUS:
-                    ParamHashMap add2 = new ParamHashMap().add("gid", params[0]).add("group_name", params[1]).add("joingroup", FrameApplication.getFrameApplicationContext().getString(R.string.secrectKey_posting));
+                    ParamHashMap add2 = new ParamHashMap().add("gid", params[0]).add("group_name", params[1]).add("screctKey", FrameApplication.getFrameApplicationContext().getString(R.string.secrectKey_posting));
                     NetManger.getInstance().netWork(NetManger.mService.joinFocus(Host.BBS_API+Method.JOINGROUP,add2),pPresenter,whichApi,params[2]);
                     break;
         }

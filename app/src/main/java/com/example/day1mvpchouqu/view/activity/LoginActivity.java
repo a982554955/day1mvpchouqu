@@ -3,6 +3,7 @@ package com.example.day1mvpchouqu.view.activity;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.data.BaseInfo;
 import com.example.data.LoginInfo;
@@ -24,11 +25,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.example.day1mvpchouqu.constants.JumpConstant.*;
+import static com.example.day1mvpchouqu.constants.JumpConstant.JUMP_KEY;
+import static com.example.day1mvpchouqu.constants.JumpConstant.REGISTER_TO_LOGIN;
+import static com.example.day1mvpchouqu.constants.JumpConstant.SPLASH_TO_LOGIN;
+import static com.example.day1mvpchouqu.constants.JumpConstant.SUB_TO_LOGIN;
 
 public class LoginActivity extends BaseMvpActivity<AccountModel> implements LoginView.LoginViewCallBack {
     @BindView(R.id.login_view)
     LoginView mLoginView;
+    @BindView(R.id.register_press)
+    TextView registerPress;
     private Disposable mSubscribe;
     private String PhoneNum;
     private String mFromType;
@@ -59,10 +65,10 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
         switch (whichApi) {
             case ApiConfig.SEND_VERIFY:
                 BaseInfo<String> info = (BaseInfo<String>) pD[0];
-                if (info.isSuccess()){
-                       showToast(info.result);
+                if (info.isSuccess()) {
+                    showToast(info.result);
                     goTime();
-                }else showToast("验证码发送太频繁，请稍后重试");
+                } else showToast("验证码发送太频繁，请稍后重试");
 
                 break;
             case ApiConfig.VERIFY_LOGIN:
@@ -82,9 +88,9 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
     }
 
     private void jump() {
-        if (mFromType.equals(SPLASH_TO_LOGIN)||mFromType.equals(SUB_TO_LOGIN))
-            startActivity(new Intent(this,HomeActivity.class));
-            this.finish();
+        if (mFromType.equals(SPLASH_TO_LOGIN) || mFromType.equals(SUB_TO_LOGIN))
+            startActivity(new Intent(this, HomeActivity.class));
+        this.finish();
 
 
     }
@@ -94,25 +100,31 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
     private void goTime() {
         mSubscribe = Observable.interval(1, TimeUnit.SECONDS).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(goTime -> {
             mLoginView.getVerifyCode.setText(time - goTime + "s");
-            if (time - goTime < 1) doPre();
+            if (time - goTime < 1) {
+                doPre();
+                mLoginView.getVerifyCode.setText("获取验证码");
+            }
+
         });
     }
 
     private void doPre() {
         if (mSubscribe != null && !mSubscribe.isDisposed()) mSubscribe.dispose();
-        mLoginView.getVerifyCode.setText("获取验证码");
+
+
     }
 
     @OnClick({R.id.close_login, R.id.register_press, R.id.forgot_pwd, R.id.login_by_qq, R.id.login_by_wx})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.close_login:
-                if (!TextUtils.isEmpty(mFromType)&&(mFromType.equals(SUB_TO_LOGIN)||mFromType.equals(SPLASH_TO_LOGIN))){
-                    startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                if (!TextUtils.isEmpty(mFromType) && (mFromType.equals(SUB_TO_LOGIN) || mFromType.equals(SPLASH_TO_LOGIN))||mFromType.equals(REGISTER_TO_LOGIN)) {
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 }
                 finish();
                 break;
             case R.id.register_press:
+                startActivity(new Intent(this,RegisterActivity.class));
                 break;
             case R.id.forgot_pwd:
                 break;
@@ -125,7 +137,7 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
 
     @Override
     public void sendVerifyCode(String phoneNum) {
-      PhoneNum=phoneNum;
+        PhoneNum = phoneNum;
         mPresenter.getData(ApiConfig.SEND_VERIFY, PhoneNum);
     }
 
@@ -142,4 +154,8 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
         super.onDestroy();
         doPre();
     }
+
+
+
+
 }
