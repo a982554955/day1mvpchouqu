@@ -9,6 +9,7 @@ import frame.Host;
 import frame.ICommonModel;
 import frame.ICommonPresenter;
 import frame.NetManger;
+import frame.constants.Constants;
 import frame.utils.ParamHashMap;
 
 public class DataModel implements ICommonModel {
@@ -27,6 +28,10 @@ public class DataModel implements ICommonModel {
                     ParamHashMap add2 = new ParamHashMap().add("gid", params[0]).add("group_name", params[1]).add("screctKey", FrameApplication.getFrameApplicationContext().getString(R.string.secrectKey_posting));
                     NetManger.getInstance().netWork(NetManger.mService.joinFocus(Host.BBS_API+Method.JOINGROUP,add2),pPresenter,whichApi,params[2]);
                     break;
+                    case ApiConfig.DATA_ESSENCE:
+                        ParamHashMap map = new ParamHashMap().add("fid",FrameApplication.getFrameApplication().getSelectedInfo().getFid()).add("page", params[1]);
+                        NetManger.getInstance().netWork(NetManger.mService.getGroupEssence(Host.BBS_OPENAPI+Method.GETTHREADESSENCE,map),pPresenter,whichApi,params[0]);
+                        break;
         }
     }
 }

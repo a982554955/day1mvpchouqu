@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 /**
  * Created by 任小龙 on 2020/6/9.
  */
-public class DataGroupAdapter extends RecyclerView.Adapter<DataGroupAdapter.ViewHolder> {
+public class    DataGroupAdapter extends RecyclerView.Adapter<DataGroupAdapter.ViewHolder> {
 
     private List<DataGroupListEntity> mList;
     private Context mContext;

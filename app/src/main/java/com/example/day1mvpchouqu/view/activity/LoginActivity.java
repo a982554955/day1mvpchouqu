@@ -71,10 +71,12 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
                 } else showToast("验证码发送太频繁，请稍后重试");
 
                 break;
+
             case ApiConfig.VERIFY_LOGIN:
+                case ApiConfig.ACCOUNT_LOGIN:
                 BaseInfo<LoginInfo> baseInfo = (BaseInfo<LoginInfo>) pD[0];
                 LoginInfo loginInfo = baseInfo.result;
-                loginInfo.login_name = PhoneNum;
+                if (!TextUtils.isEmpty(PhoneNum))loginInfo.login_name = PhoneNum;
                 mApplication.setLoginInfo(loginInfo);
                 mPresenter.getData(ApiConfig.GET_HEADER_INFO);
                 break;
@@ -84,6 +86,7 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
                 SharedPrefrenceUtils.putObject(this, ConstantKey.LOGIN_INFO, mApplication.getLoginInfo());
                 jump();
                 break;
+
         }
     }
 
@@ -146,7 +149,9 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
         doPre();
         if (mLoginView.mCurrentLoginType == mLoginView.VERIFY_TYPE)
             mPresenter.getData(ApiConfig.VERIFY_LOGIN, userName, pwd);
-//            jump();
+        else if (mLoginView.mCurrentLoginType==mLoginView.ACCOUNT_TYPE){
+            mPresenter.getData(ApiConfig.ACCOUNT_LOGIN,userName,pwd);
+        }
     }
 
     @Override

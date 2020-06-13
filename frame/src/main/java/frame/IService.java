@@ -3,12 +3,15 @@ package frame;
 import com.example.data.BaseInfo;
 import com.example.data.CourseListInfo;
 import com.example.data.DataGroupListEntity;
+import com.example.data.EssencePostEntity;
 import com.example.data.IndexCommondEntity;
 import com.example.data.LoginInfo;
 import com.example.data.MainAdEntity;
 import com.example.data.PersonHeader;
 import com.example.data.SpecialtyChooseEntity;
 import com.example.data.TestInfo;
+import com.example.data.VIPBannerBean;
+import com.example.data.VIPListBean;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -35,9 +38,8 @@ public interface IService {
     @GET()
     Observable<BaseInfo<List<SpecialtyChooseEntity>>> getSubjectList(@Url String url);
 
-    @GET("loginByMobileCode")
-    Observable<BaseInfo<String>> getLoginVerify(@Query("mobile") String mobile);
-
+    @GET
+    Observable<BaseInfo<String>> getLoginVerify(@Url String url,@Query("mobile") String mobile);
     @GET("loginByMobileCode")
     Observable<BaseInfo<LoginInfo>> loginByVerify(@QueryMap Map<String, Object> params);
 
@@ -81,4 +83,15 @@ public interface IService {
     @FormUrlEncoded
     Observable<BaseInfo> registerCompleteWithSubject(@Url String url, @FieldMap Map<String,Object> params);
 
+    @POST
+    @FormUrlEncoded
+    Observable<BaseInfo<LoginInfo>> loginByAccount(@Url String url, @FieldMap Map<String,Object> params);
+
+    @GET
+    Observable<BaseInfo<List<EssencePostEntity>>>getGroupEssence(@Url String url, @QueryMap Map<String,Object> params);
+    @GET
+    Observable<VIPBannerBean> getVIPBannerBean(@Url String url, @QueryMap Map<String,Object> params);
+
+    @GET
+    Observable<VIPListBean> getVIPListBean(@Url String url, @QueryMap Map<String,Object> params);
 }

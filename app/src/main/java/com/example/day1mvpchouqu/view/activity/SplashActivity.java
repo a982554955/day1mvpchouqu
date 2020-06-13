@@ -17,6 +17,7 @@ import com.example.day1mvpchouqu.model.LauchModel;
 import com.yiyatech.utils.newAdd.GlideUtil;
 import com.yiyatech.utils.newAdd.SharedPrefrenceUtils;
 
+import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.OnClick;
@@ -51,6 +52,8 @@ public class SplashActivity extends BaseSplashActivity {
     @Override
     public void setUpData() {
         mSelectedInfo = SharedPrefrenceUtils.getObject(this, ConstantKey.SUBJECT_SELECT);
+        String  string = SharedPrefrenceUtils.getObject(this, ConstantKey.COOKIES);
+        mApplication.setCookie(string);
         String specialtyId = "";
         if (mSelectedInfo != null && !TextUtils.isEmpty(mSelectedInfo.getSpecialty_id())) {
             mApplication.setSelectedInfo(mSelectedInfo);
@@ -83,17 +86,22 @@ public class SplashActivity extends BaseSplashActivity {
 
     private void jump() {
         if (mSubscribe != null)mSubscribe.dispose();
-        if (mSelectedInfo != null && !TextUtils.isEmpty(mSelectedInfo.getSpecialty_id())){
-            if (mApplication.isLogin()){
-                startActivity(new Intent(this,HomeActivity.class));
-            }else {
-                startActivity(new Intent(this,LoginActivity.class).putExtra(JUMP_KEY,SPLASH_TO_LOGIN));
-            }
-        }else {
-            startActivity(new Intent(this,SubjectActivity.class).putExtra(JUMP_KEY,SPLASH_TO_SUB));
-        }
+        Observable.just("我是防抖动").debounce(20,TimeUnit.SECONDS).subscribe(ps->{
 
-        finish();
+            if (mSelectedInfo != null && !TextUtils.isEmpty(mSelectedInfo.getSpecialty_id())){
+                if (mApplication.isLogin()){
+                    startActivity(new Intent(this,HomeActivity.class));
+                }else {
+                    startActivity(new Intent(this,LoginActivity.class).putExtra(JUMP_KEY,SPLASH_TO_LOGIN));
+                }
+            }else {
+                startActivity(new Intent(this,SubjectActivity.class).putExtra(JUMP_KEY,SPLASH_TO_SUB));
+            }
+            finish();
+
+        });
+
+
     }
 
     @Override

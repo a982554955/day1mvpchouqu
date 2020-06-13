@@ -115,7 +115,6 @@ public class RegisterActivity extends BaseMvpActivity<AccountModel> implements D
                 }
                 boolean phone = RegexUtil.isPhone(userName.getText().toString().trim());
                 if (phone){
-
                     SoftInputControl.hideSoftInput(this,userName);
                     mPresenter.getData(ApiConfig.CHECK_PHONE_IS_USED,telephoneDesc.getText().toString()+userName.getText().toString().trim());
                 }else showToast("手机号格式错误");

@@ -24,7 +24,7 @@ public class AccountModel implements ICommonModel {
     public void getData(ICommonPresenter pPresenter, int whichApi, Object[] params) {
         switch (whichApi) {
             case ApiConfig.SEND_VERIFY:
-                mManger.netWork(mManger.getService(mContext.getString(R.string.passport_openapi_user)).getLoginVerify((String) params[0]), pPresenter, whichApi);
+                mManger.netWork(NetManger.mService.getLoginVerify(Host.PASSPORT_OPENAPI_USER+Method.LOGINBYMOBILECODE, (String) params[0]),pPresenter,whichApi);
                 break;
             case ApiConfig.VERIFY_LOGIN:
                 mManger.netWork(mManger.getService(mContext.getString(R.string.passport_openapi_user)).loginByVerify(new ParamHashMap().add("mobile",params[0]).add("code",params[1])),pPresenter,whichApi);
@@ -52,6 +52,12 @@ public class AccountModel implements ICommonModel {
                         .add("province_id", 0).add("city_id", 0).add("sex", 0).add("from_reg_name", 0).add("from_reg", 0);
                 mManger.netWork(NetManger.mService.registerCompleteWithSubject(Host.PASSPORT_API+Method.USERREGFORSIMPLE,param),pPresenter,whichApi);
                 break;
+                case ApiConfig.ACCOUNT_LOGIN:
+                    ParamHashMap add = new ParamHashMap().add("ZLSessionID", "").add("seccode", "").add("loginName", params[0])
+                            .add("passwd", RsaUtil.encryptByPublic((String) params[1])).add("cookieday", "")
+                            .add("fromUrl", "android").add("ignoreMobile", "0");
+                    mManger.netWork(NetManger.mService.loginByAccount(Host.PASSPORT_OPENAPI+Method.USERLOGINNEWAUTH,add),pPresenter,whichApi);
+                    break;
         }
     }
 }

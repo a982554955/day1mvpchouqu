@@ -19,5 +19,9 @@ public class ApiConfig {
     public static final int SEND_REGISTER_VERIFY = 16;
     public static final int NET_CHECK_USERNAME = 17;
     public static final int COMPLETE_REGISTER_WITH_SUBJECT = 18;
+    public static final int ACCOUNT_LOGIN = 19;
+    public static final int DATA_ESSENCE = 20;
+    public static final int VIP_BANNER = 21;
+    public static final int VIP_LIST = 22;
 
 }

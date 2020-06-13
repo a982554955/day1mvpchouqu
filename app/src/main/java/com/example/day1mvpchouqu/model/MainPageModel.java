@@ -28,6 +28,11 @@ public class MainPageModel implements ICommonModel {
                 manager.netWork(NetManger.mService.getCommonList(Host.EDU_OPENAPI+Method.GETINDEXCOMMEND,map),pPresenter,whichApi,params[0]);
                 break;
             case ApiConfig.BANNER_LIVE_DATA:
+                ////vip banner+vipzhibo
+                //	https://edu.zhulong.com/openapi/lesson/get_new_vip?uid=15063681&pro=21&uid=15063681&time=1591368296&devices=oppoR11&system=android,5.1.1&version=2.1.4&unique_id=355757265852349&client_id=205
+                //
+                //	//vip recyclerview接口（post）
+                //	https://edu.zhulong.com/openapi/lesson/getVipSmallLessonList?<specialty_id=21&sort=2&page=2&uid=15063681&appid=301&time=1591368435&token=a0cccbcac418f78103c754a870494b85&devices=oppoR11&system=android,5.1.1&version=2.1.4&unique_id=355757265852349&client_id=205>
                 ParamHashMap live = new ParamHashMap().add("pro", FrameApplication.getFrameApplication().getSelectedInfo().getSpecialty_id()).add("more_live","1").add("is_new",1).add("new_banner",1);
                 manager.netWork(NetManger.mService.getBannerLive(Host.EDU_OPENAPI+Method.GETCAROUSELPHOTO,live),pPresenter,whichApi,params[0]);
                 break;
