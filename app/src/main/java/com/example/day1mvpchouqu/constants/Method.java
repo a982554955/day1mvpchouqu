@@ -19,9 +19,8 @@ public class Method {
     public static final String USERLOGINNEWAUTH = "user/userLoginNewAuth";
     public static final String LOGINBYMOBILECODE = "loginByMobileCode";
     public static final String GET_NEW_VIP = "get_new_vip";
-//    public static final String GETVIPSMALLLESSONLIST = "lesson/getVipSmallLessonList";
     public static final String GETVIPSMALLLESSONLIST = "getVipSmallLessonList";
-
-
     public static final String  GETTHREADESSENCE = "group/getThreadEssence";
+    public static final String ACCESS_TOKEN = "access_token";
+    public static final String THIRDLOGIN = "thirdlogin";
 }

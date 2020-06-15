@@ -71,7 +71,7 @@ public class Host {
     public static String PHOTO_URL ;
     public static String PHOTO_OPENAPI ;
     public static String BBS_API ;
-
+    public static String WX_OAUTH;
 
     /**
      * 静态代码块，优先于对象的创建而执行，且只执行一次
@@ -84,6 +84,7 @@ public class Host {
             AD_OPENAPI = "";
         }
         if (API_TYPE == 3){
+            WX_OAUTH="https://api.weixin.qq.com/sns/oauth2/";
             AD_OPENAPI = mContext.getString(R.string.ad_openapi);
             PHOTO_URL = mContext.getString(R.string.photo_url);
             BBS_API = mContext.getString(R.string.bbs_api);

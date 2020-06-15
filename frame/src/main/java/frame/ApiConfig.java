@@ -23,5 +23,8 @@ public class ApiConfig {
     public static final int DATA_ESSENCE = 20;
     public static final int VIP_BANNER = 21;
     public static final int VIP_LIST = 22;
+    public static final int GET_WE_CHAT_TOKEN = 23;
+    public static final int POST_WE_CHAT_LOGIN_INFO = 24;
+
 
 }

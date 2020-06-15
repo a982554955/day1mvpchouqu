@@ -2,6 +2,7 @@ package com.example.day1mvpchouqu.model;
 
 import android.content.Context;
 
+import com.example.data.ThirdLoginData;
 import com.example.day1mvpchouqu.R;
 import com.example.day1mvpchouqu.base.Application1907;
 import com.example.day1mvpchouqu.constants.Method;
@@ -12,6 +13,7 @@ import frame.Host;
 import frame.ICommonModel;
 import frame.ICommonPresenter;
 import frame.NetManger;
+import frame.constants.ConstantKey;
 import frame.secret.RsaUtil;
 import frame.utils.ParamHashMap;
 
@@ -58,6 +60,15 @@ public class AccountModel implements ICommonModel {
                             .add("fromUrl", "android").add("ignoreMobile", "0");
                     mManger.netWork(NetManger.mService.loginByAccount(Host.PASSPORT_OPENAPI+Method.USERLOGINNEWAUTH,add),pPresenter,whichApi);
                     break;
+            case ApiConfig.GET_WE_CHAT_TOKEN:
+                ParamHashMap wxParams = new ParamHashMap().add("appid", ConstantKey.WX_APP_ID).add("secret", ConstantKey.WX_APP_SECRET).add("code", params[0]).add("grant_type", "authorization_code");
+                mManger.netWork(NetManger.mService.getWechatToken(Host.WX_OAUTH+Method.ACCESS_TOKEN,wxParams),pPresenter,whichApi);
+                break;
+            case ApiConfig.POST_WE_CHAT_LOGIN_INFO:
+                ThirdLoginData data = (ThirdLoginData) params[0];
+                ParamHashMap add1 = new ParamHashMap().add("openid", data.openid).add("type", data.type).add("url", "android");
+                mManger.netWork(NetManger.mService.loginByWechat(Host.PASSPORT_API+Method.THIRDLOGIN,add1),pPresenter,whichApi);
+                break;
         }
     }
 }

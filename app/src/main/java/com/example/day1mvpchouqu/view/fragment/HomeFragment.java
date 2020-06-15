@@ -28,7 +28,7 @@ import frame.FrameApplication;
 import static com.example.day1mvpchouqu.constants.JumpConstant.HOME_TO_SUB;
 import static com.example.day1mvpchouqu.constants.JumpConstant.JUMP_KEY;
 
-public class HomeFragment extends BaseMvpFragment<MainPageModel> implements BottomTabView.OnBottomTabClickBack, NavController.OnDestinationChangedListener {
+public class    HomeFragment extends BaseMvpFragment<MainPageModel> implements BottomTabView.OnBottomTabClickBack, NavController.OnDestinationChangedListener {
 
     @BindView(R.id.select_subject)
     TextView selectSubject;

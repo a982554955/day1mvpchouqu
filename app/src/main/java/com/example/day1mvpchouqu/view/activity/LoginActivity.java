@@ -8,11 +8,19 @@ import android.widget.TextView;
 import com.example.data.BaseInfo;
 import com.example.data.LoginInfo;
 import com.example.data.PersonHeader;
+import com.example.data.ThirdLoginData;
 import com.example.day1mvpchouqu.R;
 import com.example.day1mvpchouqu.base.BaseMvpActivity;
 import com.example.day1mvpchouqu.model.AccountModel;
 import com.example.day1mvpchouqu.view.design.LoginView;
+import com.tencent.mm.sdk.modelmsg.SendAuth;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.yiyatech.utils.newAdd.SharedPrefrenceUtils;
+import com.zhulong.eduvideo.wxapi.WXEntryActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.concurrent.TimeUnit;
 
@@ -74,6 +82,7 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
 
             case ApiConfig.VERIFY_LOGIN:
                 case ApiConfig.ACCOUNT_LOGIN:
+            case ApiConfig.POST_WE_CHAT_LOGIN_INFO:
                 BaseInfo<LoginInfo> baseInfo = (BaseInfo<LoginInfo>) pD[0];
                 LoginInfo loginInfo = baseInfo.result;
                 if (!TextUtils.isEmpty(PhoneNum))loginInfo.login_name = PhoneNum;
@@ -81,12 +90,27 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
                 mPresenter.getData(ApiConfig.GET_HEADER_INFO);
                 break;
             case ApiConfig.GET_HEADER_INFO:
+                doPre();
                 PersonHeader personHeader = ((BaseInfo<PersonHeader>) pD[0]).result;
                 mApplication.getLoginInfo().personHeader = personHeader;
                 SharedPrefrenceUtils.putObject(this, ConstantKey.LOGIN_INFO, mApplication.getLoginInfo());
                 jump();
                 break;
-
+            case ApiConfig.GET_WE_CHAT_TOKEN:
+                JSONObject allJson = null;
+                try {
+                    allJson = new JSONObject(pD[0].toString());
+                } catch (JSONException pE) {
+                    pE.printStackTrace();
+                }
+                ThirdLoginData thirdData = new ThirdLoginData(3);
+                thirdData.setOpenid(allJson.optString("openid"));
+                thirdData.token = allJson.optString("access_token");
+                thirdData.refreshToken = allJson.optString("refresh_token");
+                thirdData.utime = allJson.optLong("expires_in") * 1000;
+                thirdData.unionid = allJson.optString("unionid");
+                mPresenter.getData(ApiConfig.POST_WE_CHAT_LOGIN_INFO, thirdData);
+                break;
         }
     }
 
@@ -134,8 +158,43 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
             case R.id.login_by_qq:
                 break;
             case R.id.login_by_wx:
+                doWechatLogin();
                 break;
         }
+    }
+
+    private void doWechatLogin() {
+        WXEntryActivity.setOnWeChatLoginResultListener(it -> {
+            int errorCode = it.getIntExtra("errorCode", 0);
+            String normalCode = it.getStringExtra("normalCode");
+            switch (errorCode) {
+                case 0:
+                    showLog("用户已同意微信登录");
+                    mPresenter.getData(ApiConfig.GET_WE_CHAT_TOKEN, normalCode);
+                    break;
+                case -4:
+                    showToast("用户拒绝授权");
+                    break;
+                case -2:
+                    showToast("用户取消");
+                    break;
+
+            }
+        });
+        IWXAPI weChatApi = WXAPIFactory.createWXAPI(this, null);
+        weChatApi.registerApp(ConstantKey.WX_APP_ID);
+        if (weChatApi.isWXAppInstalled()) {
+            doWeChatLogin();
+        } else showToast("请先安装微信");
+    }
+
+    private void doWeChatLogin() {
+        SendAuth.Req request = new SendAuth.Req();
+//        snsapi_base 和snsapi_userinfo  静态获取和同意后获取
+        request.scope = "snsapi_userinfo";
+        request.state = "com.zhulong.eduvideo";
+        IWXAPI weChatApi = WXAPIFactory.createWXAPI(this, ConstantKey.WX_APP_ID);
+        weChatApi.sendReq(request);
     }
 
     @Override
