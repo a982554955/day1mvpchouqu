@@ -1,6 +1,7 @@
 package com.example.day1mvpchouqu.view.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,6 +13,7 @@ import com.example.day1mvpchouqu.base.BaseMvpFragment;
 import com.example.day1mvpchouqu.interfaces.DataListener;
 import com.example.day1mvpchouqu.interfaces.OnRecyclerItemClick;
 import com.example.day1mvpchouqu.model.DataModel;
+import com.example.day1mvpchouqu.view.activity.HomeActivity;
 import com.example.day1mvpchouqu.view.activity.LoginActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
@@ -22,6 +24,7 @@ import butterknife.BindView;
 import frame.ApiConfig;
 import frame.FrameApplication;
 import frame.LoadTypeConfig;
+import frame.constants.ConstantKey;
 
 import static com.example.day1mvpchouqu.adapter.DataGroupAdapter.FOCUS_TYPE;
 import static com.example.day1mvpchouqu.adapter.DataGroupAdapter.ITEM_TYPE;
@@ -118,7 +121,10 @@ public class DataGroupFragment extends BaseMvpFragment<DataModel> implements Dat
             if (pObjects!=null&&pObjects.length!=0){
                switch ((int)pObjects[0]){
                    case ITEM_TYPE:
-
+              HomeActivity activity= (HomeActivity) getActivity();
+                       Bundle bundle = new Bundle();
+                       bundle.putString(ConstantKey.GROU_TO_DETAIL_GID,mList.get(pos).getGid());
+                       activity.mprejectController.navigate(R.id.dataGroupDetailFragment,bundle);
                        break;
                    case FOCUS_TYPE:
                        boolean login = FrameApplication.getFrameApplication().isLogin();

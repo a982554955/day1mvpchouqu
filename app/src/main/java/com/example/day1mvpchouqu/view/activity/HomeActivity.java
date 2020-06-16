@@ -17,7 +17,7 @@ import com.example.day1mvpchouqu.model.CommonHomeModel;
 public class HomeActivity extends BaseMvpActivity<CommonHomeModel> implements NavController.OnDestinationChangedListener {
 
 
-    public NavController prejectController;
+    public NavController mprejectController;
 
     @Override
     public CommonHomeModel setModel() {
@@ -31,8 +31,8 @@ public class HomeActivity extends BaseMvpActivity<CommonHomeModel> implements Na
 
     @Override
     public void setUpView() {
-        prejectController = Navigation.findNavController(this, R.id.project_fragment_control);
-        prejectController.addOnDestinationChangedListener(this);
+       mprejectController = Navigation.findNavController(this, R.id.project_fragment_control);
+        mprejectController.addOnDestinationChangedListener(this);
     }
 
     @Override
@@ -47,6 +47,12 @@ public class HomeActivity extends BaseMvpActivity<CommonHomeModel> implements Na
     //当我到达某个目的地，就是当我点哪个Fragment
     @Override
     public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+        String label = destination.getLabel().toString();
+        showLog(label);
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
 
     }
 }

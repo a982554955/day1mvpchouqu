@@ -25,6 +25,8 @@ public class ApiConfig {
     public static final int VIP_LIST = 22;
     public static final int GET_WE_CHAT_TOKEN = 23;
     public static final int POST_WE_CHAT_LOGIN_INFO = 24;
-
+    public static final int BIND_ACCOUNT = 25;
+    public static final int GROUP_DETAIL = 26;
+    public static final int GROUP_DETAIL_FOOTER_DATA = 27;
 
 }
