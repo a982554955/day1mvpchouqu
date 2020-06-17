@@ -691,7 +691,17 @@ public class GroupDetailEntity implements Serializable {
         private String gid;
         private String sort;
         private List<SelectsBean> selects;
-//        private List<String> comment;
+        private List<String> containsName;
+
+        public List<String> getContainsName() {
+            return containsName;
+        }
+
+        public void setContainsName(List<String> pContainsName) {
+            containsName = pContainsName;
+        }
+
+        //        private List<String> comment;
         private boolean selecting;
 
         public boolean isSelecting() {

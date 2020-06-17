@@ -66,7 +66,10 @@ public class BottomTabView extends RelativeLayout {
         }
 
     }
-
+    public void changeSelected(int pos){
+        defaultTab = pos;
+        setStyle();
+    }
     /**
      * 给自定义Tab设置数据
      * normalIcon 未选中的icon集合

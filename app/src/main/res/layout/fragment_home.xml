@@ -8,11 +8,10 @@
     <LinearLayout
         android:id="@+id/top_ll"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
+        android:layout_height="@dimen/dp_40"
         android:background="@color/app_theme"
         android:orientation="horizontal"
         android:padding="@dimen/dp_5"
-
         android:paddingTop="@dimen/dp_10"
         android:paddingRight="@dimen/dp_5"
         android:paddingBottom="@dimen/dp_10"

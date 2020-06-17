@@ -107,5 +107,5 @@ public interface IService {
     @GET
     Observable<BaseInfo<GroupDetailEntity>> getGroupDetail(@Url String url, @Query("gid") Object object);
     @GET
-    Observable<BaseInfo<GroupDetailEntity>> getGroupDetailFooterData(@Url String url, @QueryMap Map<String,Object> parmas);
+    Observable<JsonObject> getGroupDetailFooterData(@Url String url, @QueryMap Map<String,Object> parmas);
 }

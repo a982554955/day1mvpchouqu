@@ -19,22 +19,26 @@ public abstract class BaseMvpFragment<M extends ICommonModel>  extends BaseFragm
     private M mModel;
     public CommonPresenter mPresenter;
     private Unbinder mBind;
+    private boolean isInit;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getLayout(), null);
         mBind= ButterKnife.bind(this,view);
-
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mModel = setModel();
-        mPresenter = new CommonPresenter(this, mModel);
         setUpView();
-        setUpData();
+        if (mModel==null)mModel = setModel();
+       if (mPresenter==null)mPresenter = new CommonPresenter(this, mModel);
+        if (!isInit){
+            setUpData();
+            isInit=true;
+        }
+
     }
 
     protected abstract int getLayout();

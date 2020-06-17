@@ -41,7 +41,10 @@ public class GlideUtil {
                         .override(resizeX, resizeY))
                 .into(imageView);
     }
-
+        /**
+         * 通过glide动态修改View的形状
+         *  注意：如果是recycleview的item中使用圆角图形，尽量在布局中使用自定义圆角图片，使用这个方法会导致图片
+         * */
     public static void loadCornerImage(ImageView imageView, String filePath, RequestListener listener, float radius) {
         CornerTransform transform = new CornerTransform(UtilsApplication.getUtilsApplicationContext(), radius);
         ColorDrawable drawable = new ColorDrawable(Color.GRAY);

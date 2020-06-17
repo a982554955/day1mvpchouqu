@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.data.DataGroupListEntity;
 import com.example.day1mvpchouqu.R;
 import com.example.day1mvpchouqu.interfaces.OnRecyclerItemClick;
+import com.example.day1mvpchouqu.view.design.RoundOrCircleImage;
 import com.yiyatech.utils.newAdd.GlideUtil;
 
 
@@ -48,7 +49,10 @@ public class    DataGroupAdapter extends RecyclerView.Adapter<DataGroupAdapter.V
         holder.tvName.setText(entity.getGroup_name());
         holder.tvNumber.setText(entity.getMember_num());
         holder.tvDesc.setText(entity.getIntroduce());
-        GlideUtil.loadCornerImage(holder.ivThumb,entity.getAvatar(),null,6f);
+//        GlideUtil.loadCornerImage(holder.ivThumb,entity.getAvatar(),null,6f);
+        holder.ivThumb.setType(1);
+        holder.ivThumb.setBorderRadius(10);
+        GlideUtil.loadImage(holder.ivThumb,entity.getAvatar());
         holder.tvFocus.setText(entity.isFocus() ? "已关注" : "+关注");
         holder.tvFocus.setSelected(entity.isFocus() ? true : false);
         holder.tvFocus.setTextColor(entity.isFocus() ? ContextCompat.getColor(mContext,R.color.red) : ContextCompat.getColor(mContext,R.color.fontColorGray));
@@ -73,7 +77,7 @@ public class    DataGroupAdapter extends RecyclerView.Adapter<DataGroupAdapter.V
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_thumb)
-        ImageView ivThumb;
+        RoundOrCircleImage ivThumb;
         @BindView(R.id.tv_name)
         TextView tvName;
         @BindView(R.id.tv_number)
